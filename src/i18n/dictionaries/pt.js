@@ -68,7 +68,27 @@ const pt = {
     stack: "Tecnologias",
     category: "Categoria",
     cursor: "Ver",
+    caseStudy: "Ver case study",
     github: "Todos os repositórios"
+  },
+  caseStudy: {
+    back: "Todos os projectos",
+    toc: "Nesta página",
+    sections: {
+      context: "Contexto",
+      problem: "Problema",
+      solution: "Solução",
+      architecture: "Arquitectura",
+      stack: "Tecnologias",
+      decisions: "Decisões técnicas",
+      results: "Resultados e validação",
+      notes: "Notas"
+    },
+    year: "Ano",
+    client: "Cliente",
+    category: "Categoria",
+    links: "Links",
+    next: "Próximo projecto"
   },
   about: {
     label: "Sobre mim",

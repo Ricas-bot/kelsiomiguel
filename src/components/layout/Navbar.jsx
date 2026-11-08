@@ -80,6 +80,9 @@ export default function Navbar({ lang, dict }) {
   return (
     <>
     <header
+      // Inline on purpose: CSS Modules would hash a view-transition-name value,
+      // and styles/transitions.css targets the literal name "site-header".
+      style={{ viewTransitionName: "site-header" }}
       className={cn(
         styles.header,
         (scrolled || menuOpen) && styles.scrolled,

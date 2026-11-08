@@ -269,6 +269,26 @@ cliente pequenas. Cada secção tem composição e movimento próprios:
 - Regra: nomes de classes de variante aplicados à raiz de um CSS Module (`.orbits`)
   não podem ser reutilizados em elementos internos (colapsou a arte do projecto principal).
 
+## 3.4 Case studies (Fase 6)
+
+- Rota `app/[lang]/projects/[slug]/page.jsx`: 6 projectos × 2 idiomas, todos SSG,
+  `dynamicParams = false` (slug desconhecido → 404 global). Metadata por projecto
+  (título, descrição, Open Graph `article`; canonical/hreflang só com domínio).
+- Conteúdo em `data/caseStudies.js`: contexto, problema, solução, arquitectura,
+  tecnologias, decisões técnicas e, **só quando verificável**, resultados e notas
+  (as secções vazias não são renderizadas). Cada afirmação vem do código/README;
+  limitações e estado (ex.: ALPHA, limites do desfazer) são ditos com franqueza.
+- Página: hero, composição do projecto, índice sticky com secção activa (`CaseToc`),
+  secções numeradas, próximo projecto em loop. No mobile o índice é omitido.
+- Home → case study: título, media e botão "Ver case study" levam à página interna;
+  links online/código continuam externos. Projectos privados também têm case study.
+- **Morph partilhado:** `ProjectMorph` dá o mesmo `view-transition-name` à
+  composição na home e no hero do case study (React `<ViewTransition share="morph">`).
+- **Bug corrigido (desde a Fase 3):** o `view-transition-name: site-header` estava num
+  CSS Module, que fazia hash do valor (`cRh5nW_site-header`), e as regras globais nunca
+  coincidiam: o header não ficava ancorado nas transições. Passou a estilo inline.
+  Regra: nomes de view transition nunca em CSS Modules.
+
 ## 4. Projectos — factos verificados nos repositórios
 
 | Projecto | Confirmado no repositório | Ano (1.º commit) |
@@ -295,7 +315,7 @@ Os anos são a data de criação do repositório.
 | 3 | i18n por rota + proxy + cookie; Navbar (secção activa, menu mobile, estado de scroll), Footer; page transitions (React `<ViewTransition>`) | ✅ |
 | 4 | Hero (sequência de entrada), SmoothScroll (Lenis), CustomCursor, Magnetic, scroll storytelling | ✅ |
 | 5 | Secções: Introduction, Selected Work, About, Experience, Expertise, Contact | ✅ |
-| 6 | `/[lang]/projects/[slug]` com case studies + imagens | — |
+| 6 | `/[lang]/projects/[slug]` com case studies | ✅ (imagens reais: pendente de material publicável) |
 | 7 | Terminal v2: histórico ↑/↓, Tab autocomplete, sugestões, atalho global, focus trap, comandos `github`/`linkedin` | — |
 | 8 | SEO: metadata por idioma, OG/Twitter, sitemap, robots, canonical + hreflang, JSON-LD `Person`, ícones; Lighthouse | — |
 | 9 | Testes: lint, build, navegação, mobile, links; deploy | — |

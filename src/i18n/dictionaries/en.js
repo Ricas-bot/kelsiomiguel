@@ -69,7 +69,27 @@ const en = {
     stack: "Stack",
     category: "Category",
     cursor: "View",
+    caseStudy: "View case study",
     github: "All repositories"
+  },
+  caseStudy: {
+    back: "All projects",
+    toc: "On this page",
+    sections: {
+      context: "Context",
+      problem: "Problem",
+      solution: "Solution",
+      architecture: "Architecture",
+      stack: "Stack",
+      decisions: "Technical decisions",
+      results: "Results & validation",
+      notes: "Notes"
+    },
+    year: "Year",
+    client: "Client",
+    category: "Category",
+    links: "Links",
+    next: "Next project"
   },
   about: {
     label: "About me",

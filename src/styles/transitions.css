@@ -77,3 +77,28 @@
     animation: vt-fade-in 150ms linear both;
   }
 }
+
+/* ---------- Shared element: project composition home ⇄ case study --------
+   React <ViewTransition share="morph"> (components/ui/ProjectMorph.jsx).   */
+::view-transition-group(.morph) {
+  animation-duration: 700ms;
+  animation-timing-function: var(--ease-out-expo);
+  z-index: 50;
+}
+
+::view-transition-image-pair(.morph) {
+  animation-name: vt-morph-blur;
+}
+
+@keyframes vt-morph-blur {
+  30% {
+    filter: blur(2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(.morph),
+  ::view-transition-image-pair(.morph) {
+    animation: none;
+  }
+}

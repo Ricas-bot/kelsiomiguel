@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import ProjectArt from "@/components/ui/ProjectArt";
+import ProjectMorph from "@/components/ui/ProjectMorph";
 import { TagList } from "@/components/ui/Tag";
 import { gsap } from "@/lib/gsap";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
@@ -16,8 +18,8 @@ import styles from "./Projects.module.css";
  * hovered project floats with the cursor: GSAP moves the wrapper, Framer
  * Motion swaps the content inside (never both on one element). On touch,
  * a small composition is shown inline in each row instead.
- * Each row's title is the primary link (stretched over the row); live and
- * source links sit above it.
+ * Each row's title links to the case study (stretched over the row); live
+ * and source links sit above it and stay external.
  */
 export default function ProjectList({ projects, startIndex = 0, lang, labels }) {
   const fine = useMediaQuery(FINE_POINTER_QUERY, false);
@@ -46,14 +48,14 @@ export default function ProjectList({ projects, startIndex = 0, lang, labels }) 
       <ul ref={listRef} className={styles.list} onPointerLeave={() => setActive(null)}>
         {projects.map((project, i) => {
           const index = startIndex + i;
-          const href = project.liveUrl ?? project.repoUrl;
+          const href = `/${lang}/projects/${project.slug}`;
           return (
             <li
               key={project.slug}
               className={styles.row}
               onPointerEnter={() => setActive(index)}
-              data-cursor={href ? "project" : undefined}
-              data-cursor-label={href ? labels.cursor : undefined}
+              data-cursor="project"
+              data-cursor-label={labels.cursor}
             >
               <span className={styles.rowIndex} aria-hidden="true">
                 {pad(index + 1)}
@@ -61,14 +63,9 @@ export default function ProjectList({ projects, startIndex = 0, lang, labels }) 
 
               <div className={styles.rowMain}>
                 <h4 className={styles.rowTitle}>
-                  {href ? (
-                    <a href={href} target="_blank" rel="noopener noreferrer" className={styles.stretched}>
-                      {project.title}
-                      <span className="sr-only"> ({labels.newTab})</span>
-                    </a>
-                  ) : (
-                    project.title
-                  )}
+                  <Link href={href} className={styles.stretched}>
+                    {project.title}
+                  </Link>
                 </h4>
                 <p className={styles.rowDescription}>{project.description[lang]}</p>
               </div>
@@ -109,7 +106,11 @@ export default function ProjectList({ projects, startIndex = 0, lang, labels }) 
               {/* Inline composition for touch; hidden by CSS on fine pointers
                   (no JS-dependent markup, so no layout shift on hydration). */}
               <div className={styles.rowThumb} aria-hidden="true">
-                <ProjectArt project={project} index={index} size="sm" />
+                <ProjectMorph slug={project.slug}>
+                  <div>
+                    <ProjectArt project={project} index={index} size="sm" />
+                  </div>
+                </ProjectMorph>
               </div>
             </li>
           );

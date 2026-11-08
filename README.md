@@ -25,7 +25,7 @@ npm start       # servir a build
 O site vive em `/pt` e `/en`. `/` redirecciona conforme a escolha guardada (cookie) ou o idioma do browser. Para adicionar um idioma, ver `src/i18n/config.js`.
 
 ## Estrutura
-- `src/app`: rotas (`[lang]/`), layout por idioma, 404 global, ícone e estilos globais
+- `src/app`: rotas (`[lang]/`, `[lang]/projects/[slug]/`), layout por idioma, 404 global, ícone e estilos globais
 - `src/i18n`: configuração de idiomas e dicionários PT/EN
 - `src/proxy.js`: redireccionamento de idioma
 - `src/components/layout`: Navbar, menu mobile, selector de idioma, Footer, transições
@@ -36,7 +36,8 @@ O site vive em `/pt` e `/en`. `/` redirecciona conforme a escolha guardada (cook
 - `src/components/sections`: secções da home (Hero, Introduction, Projects, About, Experience, Expertise, Contact)
 - `src/lib`: fontes, tokens de motion, setup GSAP, utilitários
 - `src/hooks`: hooks partilhados (media queries, reduced motion)
-- `src/data`: conteúdo verificado (perfil, experiência, clientes, projectos, competências)
+- `src/data`: conteúdo verificado (perfil, experiência, clientes, projectos, case studies, competências)
+- `src/components/case`: página de case study (índice, estilos)
 - `docs/ARCHITECTURE.md`: auditoria, arquitectura, plano por fases, dependências e decisões técnicas
 
 ## Antes de publicar

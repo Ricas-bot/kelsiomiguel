@@ -4,7 +4,6 @@
   z-index: var(--z-header);
   height: var(--header-height);
   border-bottom: 1px solid transparent;
-  view-transition-name: site-header;
   transition:
     transform var(--duration-slow) var(--ease-out-expo),
     background-color var(--duration-base) var(--ease-out-quart),
