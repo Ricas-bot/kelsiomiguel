@@ -1,0 +1,97 @@
+.cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 1000; /* above overlays (terminal, menu) */
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out-quart);
+}
+
+.cursor[data-visible="true"] {
+  opacity: 1;
+}
+
+.dot,
+.ringPos {
+  position: fixed;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.dot {
+  border-radius: 50%;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  background: var(--color-text);
+  transition: opacity var(--duration-fast) var(--ease-out-quart);
+}
+
+/* The ring is drawn at its largest size and scaled down, so state changes
+   only animate `transform` (no layout). */
+.ring {
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  border: 1px solid var(--color-line-strong);
+  scale: 0.36;
+  transition:
+    scale var(--duration-slow) var(--ease-out-expo),
+    background-color var(--duration-base) var(--ease-out-quart),
+    border-color var(--duration-base) var(--ease-out-quart),
+    opacity var(--duration-fast) var(--ease-out-quart);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-on-accent);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out-quart);
+}
+
+/* ---------- States -------------------------------------------------------- */
+.cursor[data-state="link"] .ring {
+  scale: 0.6;
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+
+.cursor[data-state="link"] .dot {
+  opacity: 0;
+}
+
+.cursor[data-state="project"] .ring {
+  scale: 1;
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+}
+
+.cursor[data-state="project"] .label {
+  opacity: 1;
+  transition-delay: 120ms;
+}
+
+.cursor[data-state="project"] .dot {
+  opacity: 0;
+}
+
+.cursor[data-state="hidden"] .ring,
+.cursor[data-state="hidden"] .dot {
+  opacity: 0;
+}
+
+.cursor[data-pressed="true"] .ring {
+  scale: 0.28;
+}
+
+.cursor[data-pressed="true"][data-state="project"] .ring {
+  scale: 0.9;
+}

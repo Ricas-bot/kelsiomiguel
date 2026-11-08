@@ -1,0 +1,108 @@
+.footer {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-9) var(--space-5);
+  border-top: var(--border);
+  background: var(--color-bg);
+}
+
+.wordmark {
+  margin-bottom: var(--space-8);
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 12.4vw, 13.5rem);
+  font-weight: 800;
+  font-stretch: 78%;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-surface-2);
+  user-select: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-7);
+}
+
+.heading {
+  margin-bottom: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 400;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.list {
+  display: grid;
+}
+
+.list a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 36px;
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  transition: color var(--duration-fast) var(--ease-out-quart);
+}
+
+.text {
+  font-size: var(--text-sm);
+}
+
+.availability {
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-5);
+  margin-top: var(--space-8);
+  padding-top: var(--space-4);
+  border-top: var(--border);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.built {
+  display: none;
+}
+
+.top {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  color: var(--color-accent);
+}
+
+@media (hover: hover) {
+  .list a:hover {
+    color: var(--color-accent);
+  }
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .built {
+    display: inline;
+  }
+}

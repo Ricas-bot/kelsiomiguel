@@ -1,0 +1,34 @@
+.list {
+  display: flex;
+  align-items: center;
+}
+
+.list li + li::before {
+  content: "/";
+  color: var(--color-text-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+}
+
+.option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  color: var(--color-text-muted);
+  transition: color var(--duration-fast) var(--ease-out-quart);
+}
+
+.current {
+  color: var(--color-accent);
+}
+
+@media (hover: hover) {
+  a.option:hover {
+    color: var(--color-text);
+  }
+}

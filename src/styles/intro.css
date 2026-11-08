@@ -1,0 +1,41 @@
+/* ==========================================================================
+   FIRST-LOAD INTRO — pre-hide before paint
+   An inline script in app/[lang]/layout.jsx sets html[data-intro="pending"]
+   on a full load of the home page (motion allowed). Elements marked
+   [data-intro-el] stay hidden until HeroMotion takes over (it removes the
+   flag once GSAP owns the start states).
+   Fail-safe: if JS never runs, everything appears after 3.5s anyway.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-intro="pending"] [data-intro-el] {
+    visibility: hidden;
+    animation: intro-failsafe 0s 3.5s forwards;
+  }
+}
+
+@keyframes intro-failsafe {
+  to {
+    visibility: visible;
+  }
+}
+
+/* Magnetic wrapper (components/effects/Magnetic.jsx). */
+.magnetic {
+  display: inline-block;
+}
+
+/* Custom cursor active (fine pointer only): hide the native cursor, but keep
+   the text caret where people type. */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+
+html.has-custom-cursor :is(input, textarea, select, [contenteditable="true"]) {
+  cursor: text !important;
+}
+
+/* Lenis owns smoothing; native smooth scroll would fight it. */
+html.lenis {
+  scroll-behavior: auto;
+}

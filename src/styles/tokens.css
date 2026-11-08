@@ -1,0 +1,119 @@
+/* ==========================================================================
+   DESIGN TOKENS — Kelsio Miguel Portfolio
+   Single source of truth for colour, type, space, layout, depth and motion.
+   JS-side motion values mirror these in src/lib/motion.js — keep in sync.
+   ========================================================================== */
+
+:root {
+  /* ---------- Colour ---------------------------------------------------- */
+  --color-bg: #0a0a0a;              /* near black — page background        */
+  --color-bg-elevated: #101010;     /* alternating section background      */
+  --color-surface: #151515;         /* panels, media placeholders          */
+  --color-surface-2: #1c1c1c;       /* hover / nested surfaces             */
+
+  --color-text: #f1f0ec;            /* soft white — 17.4:1 on --color-bg   */
+  --color-text-muted: #8f8f8a;      /* secondary — 6.1:1 on --color-bg     */
+  --color-text-subtle: #5e5e5a;     /* 3.06:1 — large display type / decoration only */
+
+  --color-line: rgba(241, 240, 236, 0.12);
+  --color-line-strong: rgba(241, 240, 236, 0.26);
+
+  --color-accent: #c7ff4a;          /* lime — use sparingly                */
+  --color-accent-soft: rgba(199, 255, 74, 0.14);
+  --color-on-accent: #0a0a0a;       /* text on lime — 16.8:1              */
+
+  /* ---------- Typography: families (set by next/font in layout) --------- */
+  --font-display: var(--font-bricolage), "Arial Narrow", system-ui, sans-serif;
+  --font-sans: var(--font-manrope), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-dm-mono), ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  /* ---------- Typography: fluid scale (min @ 360px → max @ 1600px) ------ */
+  --text-label: 0.6875rem;                                  /* 11px mono labels */
+  --text-xs: 0.75rem;                                       /* 12px             */
+  --text-sm: 0.875rem;                                      /* 14px             */
+  --text-base: 1rem;                                        /* 16px             */
+  --text-lg: clamp(1.0625rem, 0.98rem + 0.35vw, 1.3125rem); /* 17 → 21          */
+  --text-xl: clamp(1.375rem, 1.15rem + 1vw, 2rem);          /* 22 → 32          */
+  --text-2xl: clamp(1.75rem, 1.2rem + 2.4vw, 3.5rem);       /* 28 → 56          */
+  --text-3xl: clamp(2.5rem, 1.4rem + 4.9vw, 6.25rem);       /* 40 → 100         */
+  --text-4xl: clamp(3.25rem, 1.6rem + 7.4vw, 9rem);         /* 52 → 144         */
+  --text-display: clamp(4.25rem, 1.2rem + 13.6vw, 15rem);   /* 68 → 240         */
+
+  --leading-none: 0.82;
+  --leading-tight: 0.95;
+  --leading-snug: 1.15;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.8;
+
+  --tracking-display: -0.045em;
+  --tracking-tight: -0.04em;
+  --tracking-normal: 0;
+  --tracking-mono: 0.08em;
+
+  /* ---------- Space (4px base) ------------------------------------------ */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --space-section: clamp(5rem, 3rem + 8vw, 10rem);
+
+  /* ---------- Layout ---------------------------------------------------- */
+  --gutter: clamp(1rem, 0.2rem + 5.5vw, 7.5rem);
+  --container-max: 1680px;
+  --grid-columns: 12;
+  --grid-gap: clamp(1rem, 0.6rem + 1.2vw, 1.75rem);
+  --header-height: 70px;
+
+  /* ---------- Shape & depth --------------------------------------------- */
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-pill: 999px;
+  --border: 1px solid var(--color-line);
+  --border-strong: 1px solid var(--color-line-strong);
+
+  --z-base: 1;
+  --z-header: 50;
+  --z-menu: 60;
+  --z-noise: 70;
+  --z-cursor: 90;
+  --z-overlay: 100;
+  --z-transition: 110;
+
+  /* ---------- Motion ---------------------------------------------------- */
+  --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --duration-instant: 120ms;
+  --duration-fast: 200ms;
+  --duration-base: 350ms;
+  --duration-slow: 700ms;
+  --duration-reveal: 1100ms;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-height: 82px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Legacy aliases — keep the pre-design-system section styles working while
+   sections are rebuilt (Phases 3–5). Remove once nothing references them.
+   -------------------------------------------------------------------------- */
+:root {
+  --bg: var(--color-bg);
+  --panel: var(--color-surface);
+  --text: var(--color-text);
+  --muted: var(--color-text-muted);
+  --line: var(--color-line);
+  --accent: var(--color-accent);
+  --mono: var(--font-mono);
+  --sans: var(--font-sans);
+}

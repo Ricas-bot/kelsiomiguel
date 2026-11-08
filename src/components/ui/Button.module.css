@@ -1,0 +1,117 @@
+.button {
+  --btn-bg: transparent;
+  --btn-fg: var(--color-text);
+  --btn-border: var(--color-line-strong);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 44px; /* WCAG 2.5.8 target size */
+  padding: 0 var(--space-5);
+  border: 1px solid var(--btn-border);
+  border-radius: var(--radius-pill);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    color var(--duration-base) var(--ease-out-quart),
+    border-color var(--duration-base) var(--ease-out-quart);
+}
+
+.sm {
+  min-height: 36px;
+  padding: 0 var(--space-4);
+}
+
+.label {
+  position: relative;
+}
+
+.icon {
+  display: inline-flex;
+  transition: transform var(--duration-base) var(--ease-out-quart);
+}
+
+.icon svg {
+  width: 1.15em;
+  height: 1.15em;
+}
+
+/* ---------- Variants ---------------------------------------------------- */
+.primary {
+  --btn-bg: var(--color-accent);
+  --btn-fg: var(--color-on-accent);
+  --btn-border: var(--color-accent);
+}
+
+.outline {
+  --btn-border: var(--color-line-strong);
+}
+
+.link {
+  --btn-border: transparent;
+  min-height: 44px;
+  padding: 0;
+  border-radius: 0;
+  color: var(--color-accent);
+}
+
+.link .label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right;
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+/* ---------- Interaction (hover only on devices that truly hover) -------- */
+@media (hover: hover) {
+  .primary:hover {
+    --btn-bg: var(--color-text);
+    --btn-border: var(--color-text);
+  }
+
+  .outline:hover {
+    --btn-bg: var(--color-accent);
+    --btn-fg: var(--color-on-accent);
+    --btn-border: var(--color-accent);
+  }
+
+  .button:hover .icon {
+    transform: translate(2px, -2px);
+  }
+
+  .link:hover .label::after {
+    animation: underline-sweep var(--duration-slow) var(--ease-out-expo);
+  }
+}
+
+@keyframes underline-sweep {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  49% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  50% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}

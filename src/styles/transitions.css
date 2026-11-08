@@ -1,0 +1,79 @@
+/* ==========================================================================
+   PAGE TRANSITIONS — View Transitions API (driven by React <ViewTransition>)
+   Old page: lifts and fades out quickly. New page: wipes up from the bottom.
+   Total ≈ 0.9s, never blocks navigation.
+   ========================================================================== */
+
+/* Clicks during the animation reach the live page. */
+::view-transition {
+  pointer-events: none;
+}
+
+/* Only the page content animates; everything else swaps instantly. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+/* The header is the spatial anchor: it never moves. */
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+
+::view-transition-old(site-header) {
+  display: none;
+}
+
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+::view-transition-old(.page-out) {
+  animation: vt-page-out var(--duration-base) var(--ease-in-out) both;
+}
+
+::view-transition-new(.page-in) {
+  animation: vt-page-in 900ms var(--ease-out-expo) 120ms both;
+}
+
+@keyframes vt-page-out {
+  to {
+    opacity: 0;
+    transform: translateY(-3vh) scale(0.985);
+  }
+}
+
+@keyframes vt-page-in {
+  from {
+    clip-path: inset(100% 0 0 0);
+    transform: translateY(8vh);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+}
+
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+/* Reduced motion: no movement, just a brief crossfade. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(.page-out) {
+    animation: vt-fade-out 150ms linear both;
+  }
+
+  ::view-transition-new(.page-in) {
+    animation: vt-fade-in 150ms linear both;
+  }
+}
