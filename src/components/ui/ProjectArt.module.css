@@ -1,0 +1,121 @@
+.art {
+  --art-bg: #151813;
+  --art-ink: var(--color-text);
+  --art-line: rgba(241, 240, 236, 0.07);
+
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: var(--art-bg);
+  color: var(--art-ink);
+  isolation: isolate;
+}
+
+.art[data-tone="1"] {
+  --art-bg: #141418;
+}
+
+.art[data-tone="2"] {
+  --art-bg: #17140f;
+}
+
+.art[data-tone="3"] {
+  --art-bg: #10161a;
+}
+
+.art[data-tone="4"] {
+  --art-bg: #161216;
+}
+
+.pattern {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+/* ---------- Patterns ------------------------------------------------------
+   Pattern names (.orbits, .grid, …) are applied to the root element, so
+   inner elements must never reuse them (that collapsed the lead art). */
+.grid .pattern,
+.orbits .pattern {
+  background-image:
+    linear-gradient(var(--art-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--art-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(to bottom, #000 30%, transparent);
+}
+
+.bars .pattern {
+  background-image: repeating-linear-gradient(90deg, var(--art-line) 0 1px, transparent 1px 28px);
+  mask-image: linear-gradient(to right, transparent, #000 40%, #000 60%, transparent);
+}
+
+.dots .pattern {
+  background-image: radial-gradient(var(--art-line) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(circle at 70% 40%, #000, transparent 70%);
+}
+
+.lines .pattern {
+  background-image: repeating-linear-gradient(-35deg, var(--art-line) 0 1px, transparent 1px 22px);
+  mask-image: linear-gradient(to top, #000, transparent 85%);
+}
+
+.orbitsSvg {
+  position: absolute;
+  inset: 12% 8%;
+  width: 84%;
+  height: 76%;
+}
+
+.orbitsSvg ellipse {
+  stroke: rgba(199, 255, 74, 0.32);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.orbitsSvg circle {
+  fill: var(--color-accent);
+}
+
+/* ---------- Type ---------------------------------------------------------- */
+.meta {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  right: var(--space-4);
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  color: var(--color-text-muted);
+}
+
+.word {
+  position: absolute;
+  left: var(--space-4);
+  bottom: 0.04em;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 13vw, 11rem);
+  font-weight: 800;
+  font-stretch: 75%;
+  line-height: 0.78;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.lg .word {
+  font-size: clamp(5rem, 17vw, 16rem);
+}
+
+.sm .word {
+  font-size: clamp(3rem, 8vw, 5.5rem);
+}
+
+.sm .meta {
+  top: var(--space-3);
+  left: var(--space-3);
+  right: var(--space-3);
+}

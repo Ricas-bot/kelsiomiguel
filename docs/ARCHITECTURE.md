@@ -242,11 +242,39 @@ A frase de introdução acende palavra a palavra com o scroll (`ScrollTextReveal
 - `String.prototype.replace` interpreta `$` na string de substituição: usar `split/join`
   em scripts de edição.
 
+## 3.3 Secções de conteúdo (Fase 5)
+
+Todas são Server Components (`components/sections/`); a animação vive em ilhas
+cliente pequenas. Cada secção tem composição e movimento próprios:
+
+| Secção | Composição | Movimento |
+|---|---|---|
+| Introduction | Declaração gigante + 3 pilares, texto sticky | `ScrollTextReveal` (leitura com scrub) + `Reveal` |
+| Selected Work | Projecto principal (Cross-Tenant Access) em 8/12 colunas + índice editorial | `ScrollScale` (media cresce com o scroll) + pré-visualização a seguir o cursor (`ProjectList`) |
+| About | Título sticky + bio verificada + factos | `Counter` (contagem até ao valor real) |
+| Experience | Cabeçalho sticky + timeline + tabela de clientes | `ScrollProgress` (espinha preenche com scroll) + `<details>` nativo |
+| Expertise | 7 áreas em lista tipográfica + ferramentas agrupadas | `FocusList` (área na linha de leitura em foco) |
+| Contact | Superfície lima a toda a largura | Título palavra a palavra, email magnético, copiar email |
+
+- **Sem formulário**: não há backend de envio; email (enviar/copiar), LinkedIn e GitHub.
+  A cópia usa a Clipboard API e informa honestamente se falhar (`role="status"`).
+- **Projectos**: links principais para o site online ou repositório até existirem as
+  páginas de case study (Fase 6). `ProjectArt` (composições tipográficas por projecto)
+  substitui imagens até haver capturas publicáveis.
+- **Clientes**: tabela semântica (`<table>`, `scope`), responsiva em cartões no mobile;
+  âmbito exactamente como no CV.
+- **Datas**: `lib/format.js` formata sem dados de locale do `Intl`, por isso servidor e
+  cliente nunca divergem.
+- `SectionHeading` ganhou `stacked` para colunas estreitas/sticky.
+- Regra: nomes de classes de variante aplicados à raiz de um CSS Module (`.orbits`)
+  não podem ser reutilizados em elementos internos (colapsou a arte do projecto principal).
+
 ## 4. Projectos — factos verificados nos repositórios
 
 | Projecto | Confirmado no repositório | Ano (1.º commit) |
 |---|---|---|
 | **Cross-Tenant Access** (`crosstenant`) | Plugin local Totara (`local_crosstenant`, maturidade ALPHA, base Moodle 3.9 / Totara 19). Autoriza User → Course entre tenants; papéis limitados a student/editingteacher; capabilities `view`/`grantaccess`/`revokeaccess`; 4 funções externas AJAX; inscrição via instância `enrol_self` dedicada por curso; tarefa agendada de expiração (15 min); eventos de auditoria; privacy provider RGPD com anonimização; observer de eliminação de curso; UI Mustache + AMD; strings PT/EN; 10 ficheiros de testes PHPUnit + scripts CLI de verificação. Achado em aberto documentado: cursos cross-tenant não aparecem nas listagens "Os meus cursos". **Não reproduzir** host de QA, nomes de tenants ou IDs que constam do README. | 2026 |
+| **Progress Recovery** (repositório **privado**, dados sensíveis; fonte: README fornecido pelo Kelsio, 2026-11-08) | Plugin local Totara 19 (`local_progressrecovery`), desenvolvido para a **Zurich**. Recebe, valida, compara e recupera dados exportados por uma ferramenta de extracção. **Validação:** pára na primeira falha, nada é guardado; ZIP lido por streams (nunca extraído); nomes de entradas seguros, sem symlinks, cifra ou expansão desproporcionada; assinatura HMAC-SHA256 com segredo partilhado; checksums SHA-256 com lista fechada; manifesto com lista fechada de tabelas; compatibilidade por componente (4 níveis); pacotes guardados fora do webroot. **Comparação:** 7 classificações (Novo, Idêntico, Alterado, Conflito, Inválido, Destino mais recente, Ignorado), sem alterar dados; utilizadores mapeados por username; o destino prevalece; relatório com filtros e exportação CSV/JSON. **Recuperação em 6 etapas** validadas uma a uma (contas e fichas, tentativas SCORM, Feedback e conclusões, notas, registos de eventos, certificados), por lotes retomáveis; operação por registo (interrupções nunca duplicam; reclassificação no momento da escrita); conclusões via `core_completion\helper`; nunca cria inscrições; **desfazer** por ordem inversa, com limites documentados. Recuperação desligada por omissão; capability `local/progressrecovery:manage` sem papel por omissão. **Testes:** scripts que geram pacotes reais em SQLite descartável e validam com as classes do plugin. **Nunca publicar:** nomes de servidores, caminhos locais, estado/datas das fases, nem link para o repositório. | 2026 |
 | **LBS Demo** | Demo de website para um centro de formação executiva (Luanda Business School). HTML, CSS e JS vanilla; 2 páginas (início, contactos); barra de progresso de scroll, scroll reveal (IntersectionObserver), contadores animados, countdown, menu mobile. O formulário de contacto é apenas front-end (validação + estado de sucesso, sem envio). | 2026 |
 | **Ozua Consultoria** | Single page para um centro de formação profissional. Reconstrução de um site não lançado; **o design é de outra pessoa** (README). HTML, CSS, JS com Bootstrap 5.3, jQuery 3.7 e Lordicon; cursor personalizado, carrosséis de cursos gerados a partir de dados JS, separadores empresas/singulares, modais, FAQ em acordeão. | 2024 |
 | **UOR Website** | Website para a Universidade Óscar Ribas. HTML, CSS, JS vanilla; carrossel hero com swipe e teclado, scroll reveal, contadores, menu mobile acessível (Escape). | 2026 |
@@ -266,7 +294,7 @@ Os anos são a data de criação do repositório.
 | 2 | Design system: tokens, tipografia, espaço, motion, componentes base | ✅ |
 | 3 | i18n por rota + proxy + cookie; Navbar (secção activa, menu mobile, estado de scroll), Footer; page transitions (React `<ViewTransition>`) | ✅ |
 | 4 | Hero (sequência de entrada), SmoothScroll (Lenis), CustomCursor, Magnetic, scroll storytelling | ✅ |
-| 5 | Secções: Introduction, Selected Work, About, Experience, Expertise, Contact | — |
+| 5 | Secções: Introduction, Selected Work, About, Experience, Expertise, Contact | ✅ |
 | 6 | `/[lang]/projects/[slug]` com case studies + imagens | — |
 | 7 | Terminal v2: histórico ↑/↓, Tab autocomplete, sugestões, atalho global, focus trap, comandos `github`/`linkedin` | — |
 | 8 | SEO: metadata por idioma, OG/Twitter, sitemap, robots, canonical + hreflang, JSON-LD `Person`, ícones; Lighthouse | — |

@@ -1,0 +1,183 @@
+/* The only full-bleed accent surface on the site. Text colours here are
+   all ≥ 7:1 on #c7ff4a. */
+.section {
+  padding-block: var(--space-section) var(--space-9);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.section ::selection {
+  background: var(--color-on-accent);
+  color: var(--color-accent);
+}
+
+.section :focus-visible {
+  outline-color: var(--color-on-accent);
+}
+
+.eyebrow {
+  margin-top: var(--space-9);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: #2c3613;
+}
+
+.title {
+  display: grid;
+  margin-top: var(--space-4);
+  font-size: var(--text-display);
+  font-weight: 800;
+  font-stretch: 75%;
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.titleLine {
+  display: block;
+}
+
+.titleLine + .titleLine {
+  color: #3d4a1a;
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-7);
+  margin-top: var(--space-8);
+}
+
+.primary {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+}
+
+.email {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 2px solid currentColor;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 0.8rem + 2.4vw, 3rem);
+  font-weight: 600;
+  font-stretch: 90%;
+  letter-spacing: -0.02em;
+  word-break: break-all;
+}
+
+.email svg {
+  flex: none;
+  width: 0.9em;
+  height: 0.9em;
+  transition: transform var(--duration-base) var(--ease-out-quart);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.send,
+.copy {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border: 1px solid rgba(10, 10, 10, 0.4);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-on-accent);
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    color var(--duration-base) var(--ease-out-quart);
+}
+
+.send {
+  background: var(--color-on-accent);
+  color: var(--color-accent);
+  border-color: var(--color-on-accent);
+}
+
+.copyStatus {
+  flex-basis: 100%;
+  min-height: 1.2em;
+  font-size: var(--text-xs);
+}
+
+.secondary {
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+}
+
+.body {
+  max-width: 40ch;
+  line-height: var(--leading-relaxed);
+}
+
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+}
+
+.social a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--duration-fast) var(--ease-out-quart);
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: #2c3613;
+}
+
+@media (hover: hover) {
+  .email:hover svg {
+    transform: translate(3px, -3px);
+  }
+
+  .send:hover {
+    background: transparent;
+    color: var(--color-on-accent);
+  }
+
+  .copy:hover {
+    background: var(--color-on-accent);
+    color: var(--color-accent);
+  }
+
+  .social a:hover {
+    border-bottom-color: currentColor;
+  }
+}
+
+@media (min-width: 1000px) {
+  .grid {
+    grid-template-columns: 7fr 5fr;
+    column-gap: var(--space-9);
+    align-items: start;
+  }
+}

@@ -1,7 +1,10 @@
 /**
  * Selected work. Every field was verified against the public repository
- * on 2026-11-08 (README, package.json, source files, GitHub Pages).
+ * on 2026-11-08 (README, package.json, source files, GitHub Pages), or —
+ * for private work — against material Kelsio provided (noted inline).
  * `year` = repository creation year. `liveUrl` = GitHub Pages (HTTP 200).
+ * `repoUrl: null` = private code: the UI shows "private" and links nowhere.
+ * `client` (optional) = named with Kelsio's approval.
  * Case-study fields (context, problem, solution…) are added in Phase 6.
  */
 export const projects = [
@@ -21,6 +24,24 @@ export const projects = [
     tags: ["PHP", "Totara", "JavaScript", "Mustache", "PHPUnit"],
     liveUrl: null,
     repoUrl: "https://github.com/Ricas-bot/crosstenant"
+  },
+  {
+    // Source: plugin README shared by Kelsio (2026-11-08); the repository is
+    // private (sensitive data). Public copy describes the engineering only —
+    // never server names (sv1/sv2), local paths, phase status or client data.
+    slug: "progress-recovery",
+    title: "Progress Recovery",
+    art: "REC",
+    year: 2026,
+    client: "Zurich",
+    category: { pt: "Plugin Totara · LMS Engineering", en: "Totara plugin · LMS Engineering" },
+    description: {
+      pt: "Plugin para Totara 19 que recupera o progresso dos formandos a partir de um pacote assinado: validação segura, comparação com a instalação e recuperação por etapas retomáveis, com opção de desfazer.",
+      en: "Totara 19 plugin that restores learner progress from a signed package: secure validation, comparison against the live site and recovery in resumable stages, with an undo option."
+    },
+    tags: ["PHP", "Totara 19", "HMAC-SHA256", "SCORM", "CSV / JSON"],
+    liveUrl: null,
+    repoUrl: null // private repository
   },
   {
     slug: "lbs-demo",

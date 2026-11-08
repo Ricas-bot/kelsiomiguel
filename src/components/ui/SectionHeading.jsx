@@ -14,10 +14,11 @@ import styles from "./SectionHeading.module.css";
  * @param {string}  [count]  Optional superscript counter, e.g. "(04)"
  * @param {string}  [as]     Heading level, defaults to "h2"
  * @param {string}  [id]     id for the heading (use with aria-labelledby)
+ * @param {boolean} [stacked] Title and aside in one column (for narrow/sticky columns)
  */
-export default function SectionHeading({ index, label, title, aside, count, as = "h2", id, className }) {
+export default function SectionHeading({ index, label, title, aside, count, as = "h2", id, stacked = false, className }) {
   return (
-    <div className={cn(styles.root, className)}>
+    <div className={cn(styles.root, stacked && styles.stacked, className)}>
       <SectionLabel index={index} label={label} />
       <div className={styles.body}>
         <Reveal as={as} id={id} variant="words" className={styles.title}>

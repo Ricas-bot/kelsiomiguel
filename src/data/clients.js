@@ -1,6 +1,7 @@
 /**
  * Client engagements (professional work at EDUdigital).
- * Source: CV › Projetos (2026-10-15). Naming approved by Kelsio 2026-11-08.
+ * Source: CV › Projetos (2026-10-15), plus entries added directly by Kelsio
+ * (marked inline). Naming approved by Kelsio 2026-11-08.
  * Only what the CV states — no metrics, no internal details, no screenshots.
  * `market` mapping: PT = Portugal, AO = Angola (two markets confirmed by Kelsio).
  */
@@ -15,6 +16,20 @@ export const clients = [
       en: "REST API, systems integration, SSO configuration, multi-tenant support, custom plugins, training for trainers and coordinators, and microlearning development."
     },
     tags: ["REST API", "SSO", "Multi-tenant", "Plugins"]
+  },
+  {
+    // Source: Kelsio, 2026-11-08 (not in the CV). Market assumed PT — confirm.
+    // Progress Recovery lives in a private repo (sensitive data): mention by
+    // name and purpose only — never link it or describe its internals.
+    id: "zurich",
+    name: "Zurich",
+    platform: "Totara",
+    market: "PT",
+    scope: {
+      pt: "Migração da plataforma de CentOS 7 para um novo servidor AlmaLinux 9, com PHP 8.3, MySQL 8 e site protegido por WAF Imperva. Desenvolvimento à medida do plugin Progress Recovery.",
+      en: "Platform migration from CentOS 7 to a new AlmaLinux 9 server, with PHP 8.3, MySQL 8 and the site protected by an Imperva WAF. Custom development of the Progress Recovery plugin."
+    },
+    tags: ["Migration", "AlmaLinux 9", "PHP 8.3", "MySQL 8", "WAF Imperva", "Plugins"]
   },
   {
     id: "cin",

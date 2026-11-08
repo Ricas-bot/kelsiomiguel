@@ -1,0 +1,75 @@
+.section {
+  padding-block: var(--space-section);
+  border-top: var(--border);
+  background: var(--color-bg-elevated);
+}
+
+.statement {
+  margin-top: var(--space-8);
+  max-width: 18ch;
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  font-stretch: 85%;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-8);
+  margin-top: var(--space-9);
+}
+
+.body {
+  max-width: 36ch;
+  font-size: var(--text-lg);
+  line-height: var(--leading-normal);
+  color: var(--color-text-muted);
+}
+
+.pillars {
+  display: grid;
+  border-top: var(--border);
+}
+
+.pillar {
+  display: grid;
+  grid-template-columns: 3ch minmax(0, 1fr);
+  column-gap: var(--space-4);
+  row-gap: var(--space-2);
+  padding-block: var(--space-5);
+  border-bottom: var(--border);
+}
+
+.index {
+  grid-row: span 2;
+  padding-top: 0.35em;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  color: var(--color-accent);
+}
+
+.pillarTitle {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  font-stretch: 90%;
+}
+
+.pillarBody {
+  max-width: 48ch;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 1000px) {
+  .grid {
+    grid-template-columns: 5fr 7fr;
+    align-items: start;
+  }
+
+  .body {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-6));
+  }
+}

@@ -1,0 +1,301 @@
+.section {
+  padding-block: var(--space-section);
+}
+
+.layout {
+  display: grid;
+  gap: var(--space-6);
+}
+
+/* ---------- Timeline ---------------------------------------------------- */
+.timeline {
+  position: relative;
+  padding-left: var(--space-6);
+}
+
+.roles {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.timeline::before,
+.spine {
+  content: "";
+  position: absolute;
+  top: 0.4rem;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+}
+
+.timeline::before {
+  background: var(--color-line);
+}
+
+.spine {
+  display: block;
+  background: var(--color-accent);
+  transform-origin: top;
+}
+
+.role {
+  position: relative;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.marker {
+  position: absolute;
+  top: 0.35rem;
+  left: calc(var(--space-6) * -1 - 4px);
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  background: var(--color-bg);
+}
+
+.dates {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.current {
+  color: var(--color-accent);
+  font-size: 0.6rem;
+}
+
+.roleTitle {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  font-stretch: 85%;
+  letter-spacing: -0.025em;
+}
+
+.company {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono);
+  color: var(--color-accent);
+}
+
+.highlights {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  max-width: 62ch;
+}
+
+.highlights li {
+  position: relative;
+  padding-left: var(--space-5);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+}
+
+.highlights li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--color-text-subtle);
+}
+
+.more summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  margin-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  cursor: pointer;
+  list-style: none;
+}
+
+.more summary::-webkit-details-marker {
+  display: none;
+}
+
+.more summary::before {
+  content: "+";
+  display: inline-block;
+  width: 1ch;
+  transition: transform var(--duration-base) var(--ease-out-quart);
+}
+
+.more[open] summary::before {
+  transform: rotate(45deg);
+}
+
+.more .highlights {
+  margin-top: var(--space-2);
+}
+
+/* ---------- Clients ----------------------------------------------------- */
+.clients {
+  margin-top: var(--space-10);
+}
+
+.clientsHeader {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.clientsTitle {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  font-stretch: 85%;
+  letter-spacing: -0.025em;
+}
+
+.clientsAside {
+  max-width: 48ch;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: var(--border);
+}
+
+.table thead {
+  display: none;
+}
+
+.table tr {
+  display: grid;
+  gap: var(--space-2);
+  padding-block: var(--space-5);
+  border-bottom: var(--border);
+}
+
+.table th,
+.table td {
+  padding: 0;
+  text-align: left;
+  vertical-align: top;
+}
+
+.clientName {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  font-stretch: 90%;
+}
+
+.table td {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.table td[data-label]::before {
+  content: attr(data-label) " · ";
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.table td.scope::before {
+  display: block;
+  margin-bottom: var(--space-1);
+  content: attr(data-label);
+}
+
+.market {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.market abbr {
+  padding: 1px 6px;
+  border: 1px solid var(--color-accent-soft);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  text-decoration: none;
+  color: var(--color-accent);
+}
+
+.marketName {
+  font-size: var(--text-xs);
+}
+
+.scope {
+  max-width: 60ch;
+  line-height: var(--leading-relaxed);
+}
+
+/* ---------- Desktop ---------------------------------------------------- */
+@media (min-width: 1000px) {
+  .layout {
+    grid-template-columns: 5fr 7fr;
+    gap: var(--space-9);
+    align-items: start;
+  }
+
+  .heading {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-6));
+  }
+
+  .clientsHeader {
+    grid-template-columns: 5fr 7fr;
+    align-items: end;
+    column-gap: var(--space-9);
+  }
+
+  .table thead {
+    display: table-header-group;
+  }
+
+  .table thead th {
+    padding-block: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: 400;
+    letter-spacing: var(--tracking-mono);
+    text-transform: uppercase;
+    color: var(--color-text-subtle);
+    border-bottom: var(--border);
+  }
+
+  .table tr {
+    display: table-row;
+  }
+
+  .table tbody th,
+  .table tbody td {
+    padding: var(--space-5) var(--space-4) var(--space-5) 0;
+    border-bottom: var(--border);
+  }
+
+  .table td[data-label]::before,
+  .table td.scope::before {
+    content: none;
+  }
+
+  .table tbody tr {
+    transition: background-color var(--duration-base) var(--ease-out-quart);
+  }
+}
+
+@media (min-width: 1000px) and (hover: hover) {
+  .table tbody tr:hover {
+    background: rgba(241, 240, 236, 0.02);
+  }
+}

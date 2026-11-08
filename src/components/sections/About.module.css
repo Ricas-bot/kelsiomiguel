@@ -1,0 +1,131 @@
+.section {
+  padding-block: var(--space-section);
+  border-top: var(--border);
+  background: var(--color-bg-elevated);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-8);
+  margin-top: var(--space-8);
+}
+
+.title {
+  max-width: 13ch;
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  font-stretch: 85%;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+.emphasis {
+  font-style: normal;
+  color: var(--color-accent);
+}
+
+.copy {
+  display: grid;
+  gap: var(--space-7);
+}
+
+.paragraphs {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 54ch;
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+.paragraphs p:first-child {
+  font-size: var(--text-lg);
+  line-height: var(--leading-normal);
+  color: var(--color-text);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding-top: var(--space-5);
+  border-top: var(--border);
+}
+
+.fact {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.factValue {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  font-stretch: 85%;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.factLabel {
+  max-width: 16ch;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.details {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+}
+
+.details div {
+  display: grid;
+  gap: var(--space-1);
+  padding-top: var(--space-4);
+  border-top: var(--border);
+}
+
+.details dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.details dd {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.details dd span {
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 1000px) {
+  .grid {
+    grid-template-columns: 6fr 5fr;
+    column-gap: var(--space-9);
+    align-items: start;
+  }
+
+  .title {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-6));
+  }
+
+  .details {
+    grid-template-columns: 3fr 2fr;
+    column-gap: var(--space-5);
+  }
+}

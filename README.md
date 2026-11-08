@@ -30,10 +30,10 @@ O site vive em `/pt` e `/en`. `/` redirecciona conforme a escolha guardada (cook
 - `src/proxy.js`: redireccionamento de idioma
 - `src/components/layout`: Navbar, menu mobile, selector de idioma, Footer, transições
 - `src/styles`: design system (`tokens.css`, `base.css`, `utilities.css`)
-- `src/components/ui`: componentes base (Button, Tag, SectionHeading)
-- `src/components/effects`: efeitos de animação (Reveal)
+- `src/components/ui`: componentes base (Button, Tag, SectionHeading, SectionLink, ProjectArt)
+- `src/components/effects`: efeitos (Reveal, SmoothScroll, CustomCursor, Magnetic, ScrollTextReveal, ScrollScale, Counter, ScrollProgress, FocusList)
 - `src/components/terminal`: terminal interactivo e provider
-- `src/components/home`: secções da home (em migração)
+- `src/components/sections`: secções da home (Hero, Introduction, Projects, About, Experience, Expertise, Contact)
 - `src/lib`: fontes, tokens de motion, setup GSAP, utilitários
 - `src/hooks`: hooks partilhados (media queries, reduced motion)
 - `src/data`: conteúdo verificado (perfil, experiência, clientes, projectos, competências)

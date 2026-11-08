@@ -1,0 +1,122 @@
+.section {
+  padding-block: var(--space-section);
+  border-top: var(--border);
+  background: var(--color-bg-elevated);
+}
+
+.list {
+  border-top: var(--border);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 3ch minmax(0, 1fr);
+  gap: var(--space-3) var(--space-4);
+  padding-block: var(--space-6);
+  border-bottom: var(--border);
+  transition: opacity var(--duration-slow) var(--ease-out-quart);
+}
+
+/* Scroll focus (only once FocusList has mounted). */
+.list[data-focus-ready] .item {
+  opacity: 0.32;
+}
+
+.list[data-focus-ready] .item[data-active] {
+  opacity: 1;
+}
+
+.index {
+  padding-top: 0.55em;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  color: var(--color-text-subtle);
+  transition: color var(--duration-slow) var(--ease-out-quart);
+}
+
+.item[data-active] .index {
+  color: var(--color-accent);
+}
+
+.title {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  font-stretch: 82%;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.detail {
+  grid-column: 2;
+  display: grid;
+  gap: var(--space-4);
+}
+
+.description {
+  max-width: 50ch;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Toolkit ----------------------------------------------------- */
+.toolkit {
+  margin-top: var(--space-9);
+}
+
+.toolkitTitle {
+  margin-bottom: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 400;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.groups {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+}
+
+.group {
+  display: grid;
+  gap: var(--space-1);
+  padding-top: var(--space-3);
+  border-top: var(--border);
+}
+
+.group dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.group dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1.9;
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 900px) {
+  .item {
+    grid-template-columns: 4ch minmax(0, 6fr) minmax(0, 5fr);
+    align-items: start;
+    gap: var(--space-6);
+  }
+
+  .detail {
+    grid-column: 3;
+    padding-top: 0.4em;
+  }
+
+  .groups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: var(--space-6);
+  }
+}
