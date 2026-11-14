@@ -53,7 +53,7 @@ export async function generateMetadata({ params }) {
     : {};
 
   return {
-    title: { default: dict.meta.title, template: `%s — ${profile.name}` },
+    title: { default: dict.meta.title, template: `%s - ${profile.name}` },
     description: dict.meta.description,
     applicationName: profile.name,
     authors: [{ name: profile.name, url: profile.contact.github }],

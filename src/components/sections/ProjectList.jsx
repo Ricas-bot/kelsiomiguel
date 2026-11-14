@@ -86,7 +86,7 @@ export default function ProjectList({ projects, startIndex = 0, lang, labels }) 
                     {labels.live} <ArrowUpRight size={14} aria-hidden="true" />
                     <span className="sr-only">
                       {" "}
-                      — {project.title} ({labels.newTab})
+                      - {project.title} ({labels.newTab})
                     </span>
                   </a>
                 )}
@@ -95,7 +95,7 @@ export default function ProjectList({ projects, startIndex = 0, lang, labels }) 
                     {labels.repo} <ArrowUpRight size={14} aria-hidden="true" />
                     <span className="sr-only">
                       {" "}
-                      — {project.title} ({labels.newTab})
+                      - {project.title} ({labels.newTab})
                     </span>
                   </a>
                 ) : (

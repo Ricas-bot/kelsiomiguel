@@ -32,7 +32,7 @@ O site vive em `/pt` e `/en`. `/` redirecciona conforme a escolha guardada (cook
 - `src/styles`: design system (`tokens.css`, `base.css`, `utilities.css`)
 - `src/components/ui`: componentes base (Button, Tag, SectionHeading, SectionLink, ProjectArt)
 - `src/components/effects`: efeitos (Reveal, SmoothScroll, CustomCursor, Magnetic, ScrollTextReveal, ScrollScale, Counter, ScrollProgress, FocusList)
-- `src/components/terminal`: terminal interactivo e provider
+- `src/components/terminal`: terminal interactivo (comandos, textos, provider). Abre com o botão da navbar, Ctrl/⌘+K ou `
 - `src/components/sections`: secções da home (Hero, Introduction, Projects, About, Experience, Expertise, Contact)
 - `src/lib`: fontes, tokens de motion, setup GSAP, utilitários
 - `src/hooks`: hooks partilhados (media queries, reduced motion)

@@ -1,6 +1,6 @@
 const pt = {
   meta: {
-    title: "Kelsio Miguel — Full-Stack Developer & LMS Engineer",
+    title: "Kelsio Miguel - Full-Stack Developer & LMS Engineer",
     description:
       "Portfólio de Kelsio Miguel: desenvolvimento full-stack, engenharia de plataformas Moodle e Totara, integração de sistemas e infraestrutura. Lisboa, Portugal."
   },
@@ -8,7 +8,7 @@ const pt = {
     skipToContent: "Saltar para o conteúdo",
     mainNav: "Navegação principal",
     footerNav: "Navegação do rodapé",
-    home: "Kelsio Miguel — início",
+    home: "Kelsio Miguel - início",
     openMenu: "Abrir menu",
     closeMenu: "Fechar menu",
     language: "Idioma",
@@ -29,7 +29,7 @@ const pt = {
   hero: {
     title: "Creative Developer / Software Engineer",
     description:
-      "Transformo problemas complexos em experiências digitais funcionais. Código, sistemas e pessoas — ligados com intenção.",
+      "Transformo problemas complexos em experiências digitais funcionais. Código, sistemas e pessoas - ligados com intenção.",
     ctaWork: "Ver trabalhos",
     ctaTerminal: "Abrir terminal",
     scroll: "Scroll",
@@ -95,7 +95,7 @@ const pt = {
     title: "Entre o código e o contexto.",
     emphasis: "É aí que crio valor.",
     paragraphs: [
-      "Sou licenciado em Engenharia Informática e Comunicações pela Universidade Óscar Ribas e trabalho há mais de 4 anos em tecnologias de informação — hoje como Customer Solutions Developer na EDUdigital, em Lisboa.",
+      "Sou licenciado em Engenharia Informática e Comunicações pela Universidade Óscar Ribas e trabalho há mais de 4 anos em tecnologias de informação - hoje como Customer Solutions Developer na EDUdigital, em Lisboa.",
       "Gosto de compreender o problema antes de escolher a tecnologia. Passo do levantamento de requisitos com o cliente ao código, e do código ao servidor onde ele corre.",
       "Interessa-me a arquitectura por trás das aplicações: como os sistemas se ligam, se autenticam e se mantêm estáveis em produção. É por isso que trabalho entre frontend, backend e infraestrutura."
     ],
@@ -117,7 +117,7 @@ const pt = {
   expertise: {
     label: "Áreas de especialização",
     title: "O que faço",
-    aside: "Competências aplicadas a projectos reais — sem barras de progresso nem classificações subjectivas.",
+    aside: "Competências aplicadas a projectos reais - sem barras de progresso nem classificações subjectivas.",
     areas: [
       {
         id: "backend",
@@ -173,7 +173,7 @@ const pt = {
     send: "Enviar email",
     copy: "Copiar email",
     copied: "Email copiado",
-    copyFailed: "Não foi possível copiar — use o endereço acima."
+    copyFailed: "Não foi possível copiar - use o endereço acima."
   },
   footer: {
     navigation: "Navegação",

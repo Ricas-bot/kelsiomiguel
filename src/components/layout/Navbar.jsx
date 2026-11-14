@@ -141,6 +141,8 @@ export default function Navbar({ lang, dict }) {
               openTerminal();
             }}
             aria-label={dict.a11y.openTerminal}
+            aria-keyshortcuts="Control+K Meta+K"
+            title={`${dict.nav.terminal} (Ctrl+K)`}
           >
             <TerminalIcon size={15} aria-hidden="true" />
             <span className={styles.terminalLabel}>{dict.nav.terminal}</span>

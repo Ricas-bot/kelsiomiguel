@@ -13,7 +13,7 @@ import styles from "./global-not-found.module.css";
  * Next adds <meta name="robots" content="noindex"> automatically.
  */
 export const metadata = {
-  title: "404 — Kelsio Miguel",
+  title: "404 - Kelsio Miguel",
   description: `${pt.notFound.title} · ${en.notFound.title}`
 };
 

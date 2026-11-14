@@ -1,0 +1,337 @@
+/* ==========================================================================
+   TERMINAL
+   ========================================================================== */
+.backdrop {
+  --term-bg: #0b0d0b;
+  --term-line: rgba(199, 255, 74, 0.16);
+  --term-text: #d9e2d2;
+  --term-muted: #8a9786; /* 5.9:1 on --term-bg */
+  --term-error: #ff8a7a; /* 7.6:1 on --term-bg */
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* never wider than the viewport */
+  place-items: center;
+  padding: var(--space-4);
+  background: rgba(0, 0, 0, 0.72);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.window {
+  display: flex;
+  flex-direction: column;
+  width: min(780px, 100%);
+  min-width: 0;
+  height: min(600px, calc(100svh - var(--space-8)));
+  border: 1px solid var(--term-line);
+  background: var(--term-bg);
+  box-shadow: 0 30px 120px rgba(0, 0, 0, 0.6);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--term-text);
+}
+
+/* ---------- Title bar ---------------------------------------------------- */
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 48px;
+  padding: 0 var(--space-2) 0 var(--space-4);
+  border-bottom: 1px solid var(--term-line);
+}
+
+.barTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  color: var(--color-accent);
+}
+
+.barDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 12px var(--color-accent);
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: none;
+  color: var(--term-muted);
+  transition: color var(--duration-fast) var(--ease-out-quart);
+}
+
+/* ---------- Output ------------------------------------------------------- */
+.body {
+  flex: 1;
+  min-height: 0;
+  cursor: text;
+}
+
+.log {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-5);
+  line-height: 1.75;
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-1);
+  margin-bottom: var(--space-5);
+}
+
+.banner {
+  color: var(--color-accent);
+  letter-spacing: var(--tracking-mono);
+}
+
+.entry {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+.echo {
+  color: var(--color-text);
+  word-break: break-word;
+}
+
+.prompt {
+  flex: none;
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+/* Discreet "typing": each output block fades/slides in after the previous. */
+.line,
+.rows,
+.list {
+  animation: term-in 260ms var(--ease-out-quart) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+@keyframes term-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+.line {
+  max-width: 68ch;
+  word-break: break-word;
+}
+
+.muted {
+  color: var(--term-muted);
+}
+
+.accent {
+  color: var(--color-accent);
+}
+
+.error {
+  color: var(--term-error);
+}
+
+.rows {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(7rem, max-content) minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+.row dt {
+  color: var(--color-accent);
+}
+
+.row dd {
+  margin: 0;
+  color: var(--term-text);
+  word-break: break-word;
+}
+
+.list {
+  display: grid;
+}
+
+.listLink {
+  display: grid;
+  grid-template-columns: 3ch minmax(0, 1fr) auto;
+  column-gap: var(--space-3);
+  padding: var(--space-1) var(--space-2);
+  margin-inline: calc(var(--space-2) * -1);
+  transition: background-color var(--duration-fast) var(--ease-out-quart);
+}
+
+.listLabel {
+  color: var(--color-text);
+}
+
+.listMeta {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: var(--text-xs);
+  color: var(--term-muted);
+}
+
+.link {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-color: var(--term-line);
+  text-underline-offset: 3px;
+}
+
+/* ---------- Prompt line -------------------------------------------------- */
+.form {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--term-line);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  min-height: 36px;
+  border: 0;
+  background: none;
+  color: var(--color-text);
+  font: inherit;
+  caret-color: var(--color-accent);
+}
+
+.input:focus,
+.input:focus-visible {
+  outline: none;
+}
+
+/* The prompt line shows focus instead of the bare input. */
+.form:focus-within {
+  background: rgba(199, 255, 74, 0.03);
+}
+
+/* ---------- Footer: suggestions + status --------------------------------- */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-2) var(--space-5) var(--space-3);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chip {
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--term-line);
+  background: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--term-muted);
+  transition:
+    color var(--duration-fast) var(--ease-out-quart),
+    border-color var(--duration-fast) var(--ease-out-quart);
+}
+
+.status {
+  display: flex;
+  gap: var(--space-4);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--term-muted);
+}
+
+.online {
+  color: var(--color-accent);
+}
+
+.shortcut {
+  display: none;
+}
+
+@media (hover: hover) {
+  .close:hover {
+    color: var(--color-text);
+  }
+
+  .listLink:hover {
+    background: rgba(199, 255, 74, 0.06);
+  }
+
+  .listLink:hover .listLabel,
+  .link:hover {
+    color: var(--color-accent);
+  }
+
+  .chip:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+
+  .shortcut {
+    display: inline;
+  }
+}
+
+/* ---------- Small screens: full-height sheet ----------------------------- */
+@media (max-width: 640px) {
+  .backdrop {
+    padding: 0;
+    place-items: stretch;
+  }
+
+  .window {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .log {
+    padding: var(--space-4);
+  }
+
+  .form,
+  .footer {
+    padding-inline: var(--space-4);
+  }
+
+  /* Key above value: long emails/URLs keep their full width. */
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding-bottom: var(--space-2);
+  }
+
+  /* 16px+ prevents iOS from zooming into the field. */
+  .input {
+    font-size: 16px;
+  }
+}

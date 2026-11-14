@@ -16,5 +16,5 @@ export function formatMonthYear(iso, lang) {
 
 /** Inclusive date range; `end` null → present label. */
 export function formatRange(start, end, lang, presentLabel) {
-  return `${formatMonthYear(start, lang)} — ${end ? formatMonthYear(end, lang) : presentLabel}`;
+  return `${formatMonthYear(start, lang)} - ${end ? formatMonthYear(end, lang) : presentLabel}`;
 }

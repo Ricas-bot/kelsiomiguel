@@ -4,7 +4,7 @@
  * Source rule: every statement traces to the project's code/README (public
  * repos, verified 2026-11-08) or to material Kelsio provided (Progress
  * Recovery README). Sections without verifiable content are omitted
- * (`results: null`, `notes: null`) — never filled with invented metrics.
+ * (`results: null`, `notes: null`) - never filled with invented metrics.
  * Never include: server/host names, tenant names, IDs, local paths, phase
  * status of private work, or client data.
  *
@@ -21,12 +21,12 @@ const t = (pt, en) => ({ pt, en });
 export const caseStudies = {
   "cross-tenant-access": {
     context: t(
-      "Num Totara multi-tenant, cada tenant é isolado: um utilizador de uma organização não vê nem acede aos cursos de outra. Esse isolamento é o que torna a plataforma segura — mas há casos legítimos em que um formando ou formador de um tenant precisa de frequentar um curso específico de outro.",
-      "In multi-tenant Totara, every tenant is isolated: a user from one organisation can't see or access another's courses. That isolation is what makes the platform safe — but there are legitimate cases where a learner or trainer from one tenant needs to attend a specific course in another."
+      "Num Totara multi-tenant, cada tenant é isolado: um utilizador de uma organização não vê nem acede aos cursos de outra. Esse isolamento é o que torna a plataforma segura - mas há casos legítimos em que um formando ou formador de um tenant precisa de frequentar um curso específico de outro.",
+      "In multi-tenant Totara, every tenant is isolated: a user from one organisation can't see or access another's courses. That isolation is what makes the platform safe - but there are legitimate cases where a learner or trainer from one tenant needs to attend a specific course in another."
     ),
     problem: t(
-      "Abrir esse acesso sem enfraquecer o isolamento. A autorização tinha de ser explícita, limitada a um curso, com papel controlado, expiração e auditoria — sem nunca alterar a pertença do utilizador ao seu tenant original. E tinha de chegar a tudo o que o curso serve, actividades e ficheiros incluídos, não só à página do curso.",
-      "Opening that access without weakening isolation. Authorisation had to be explicit, scoped to one course, with a controlled role, expiry and auditing — never changing the user's membership of their original tenant. And it had to reach everything the course serves, activities and files included, not just the course page."
+      "Abrir esse acesso sem enfraquecer o isolamento. A autorização tinha de ser explícita, limitada a um curso, com papel controlado, expiração e auditoria - sem nunca alterar a pertença do utilizador ao seu tenant original. E tinha de chegar a tudo o que o curso serve, actividades e ficheiros incluídos, não só à página do curso.",
+      "Opening that access without weakening isolation. Authorisation had to be explicit, scoped to one course, with a controlled role, expiry and auditing - never changing the user's membership of their original tenant. And it had to reach everything the course serves, activities and files included, not just the course page."
     ),
     solution: t(
       [
@@ -39,11 +39,11 @@ export const caseStudies = {
       ]
     ),
     architecture: [
-      { name: t("Ponto de extensão no core", "Core extension point"), body: t("is_user_access_prevented() consulta o callback do plugin — o único ponto de decisão do isolamento.", "is_user_access_prevented() calls the plugin's callback — the single decision point for isolation.") },
+      { name: t("Ponto de extensão no core", "Core extension point"), body: t("is_user_access_prevented() consulta o callback do plugin - o único ponto de decisão do isolamento.", "is_user_access_prevented() calls the plugin's callback - the single decision point for isolation.") },
       { name: t("access_manager", "access_manager"), body: t("Decide o acesso para contextos de curso e de actividade (módulos e ficheiros herdam o tenant do curso). Recusa categorias, blocos e sistema.", "Decides access for course and activity contexts (modules and files inherit the course's tenant). Refuses categories, blocks and system.") },
       { name: t("authorization_manager", "authorization_manager"), body: t("grant(), revoke() e expire_due(): idempotentes e na mesma transacção que a inscrição.", "grant(), revoke() and expire_due(): idempotent and in the same transaction as the enrolment.") },
       { name: t("enrolment_manager", "enrolment_manager"), body: t("Uma instância de inscrição dedicada por curso, por onde passam todas as inscrições concedidas pelo plugin.", "One dedicated enrolment instance per course, through which every plugin-granted enrolment goes.") },
-      { name: t("Funções externas", "External functions"), body: t("Quatro endpoints AJAX — conceder, revogar, listar e pesquisar — formam a fronteira de segurança: parâmetros, contexto e capability são validados antes de qualquer serviço.", "Four AJAX endpoints — grant, revoke, list and search — form the security boundary: parameters, context and capability are validated before any service runs.") },
+      { name: t("Funções externas", "External functions"), body: t("Quatro endpoints AJAX - conceder, revogar, listar e pesquisar - formam a fronteira de segurança: parâmetros, contexto e capability são validados antes de qualquer serviço.", "Four AJAX endpoints - grant, revoke, list and search - form the security boundary: parameters, context and capability are validated before any service runs.") },
       { name: t("Tarefa agendada", "Scheduled task"), body: t("Marca autorizações expiradas e remove as inscrições, a cada 15 minutos por omissão.", "Marks expired authorisations and removes their enrolments, every 15 minutes by default.") },
       { name: t("Eventos e privacidade", "Events and privacy"), body: t("Eventos access_granted, access_revoked e access_expired, observer para cursos eliminados e privacy provider RGPD.", "access_granted, access_revoked and access_expired events, an observer for deleted courses and a GDPR privacy provider.") },
       { name: t("Interface", "Interface"), body: t("Templates Mustache e um módulo AMD: pesquisa com debounce, selecção de candidato e modais de confirmação.", "Mustache templates and an AMD module: debounced search, candidate selection and confirmation modals.") }
@@ -76,12 +76,12 @@ export const caseStudies = {
 
   "progress-recovery": {
     context: t(
-      "Desenvolvido para a plataforma Totara 19 da Zurich: recuperar, na instalação de destino, o progresso formativo exportado de outra instalação — contas, tentativas SCORM, conclusões, notas, registos de eventos e certificados.",
-      "Built for Zurich's Totara 19 platform: restoring, on the target site, learning progress exported from another installation — accounts, SCORM attempts, completions, grades, event logs and certificates."
+      "Desenvolvido para a plataforma Totara 19 da Zurich: recuperar, na instalação de destino, o progresso formativo exportado de outra instalação - contas, tentativas SCORM, conclusões, notas, registos de eventos e certificados.",
+      "Built for Zurich's Totara 19 platform: restoring, on the target site, learning progress exported from another installation - accounts, SCORM attempts, completions, grades, event logs and certificates."
     ),
     problem: t(
-      "Escrever directamente em dados académicos é arriscado: um pacote adulterado, um utilizador mal identificado ou uma recuperação interrompida podem corromper notas e conclusões. O processo tinha de ser verificável, retomável e conservador — nunca sobrepor dados mais recentes do destino.",
-      "Writing straight into academic data is risky: a tampered package, a misidentified user or an interrupted run can corrupt grades and completions. The process had to be verifiable, resumable and conservative — never overwriting newer data on the target."
+      "Escrever directamente em dados académicos é arriscado: um pacote adulterado, um utilizador mal identificado ou uma recuperação interrompida podem corromper notas e conclusões. O processo tinha de ser verificável, retomável e conservador - nunca sobrepor dados mais recentes do destino.",
+      "Writing straight into academic data is risky: a tampered package, a misidentified user or an interrupted run can corrupt grades and completions. The process had to be verifiable, resumable and conservative - never overwriting newer data on the target."
     ),
     solution: t(
       [
@@ -96,7 +96,7 @@ export const caseStudies = {
     architecture: [
       { name: t("Validação do pacote", "Package validation"), body: t("Pára na primeira falha e nada fica guardado. O ZIP é lido por streams, nunca extraído para disco; entradas seguras, sem ligações simbólicas nem cifra; assinatura HMAC-SHA256; checksums SHA-256 com lista fechada; manifesto com lista fechada de tabelas.", "Stops at the first failure and stores nothing. The ZIP is read via streams, never extracted to disk; safe entries, no symlinks or encryption; HMAC-SHA256 signature; SHA-256 checksums against a closed list; manifest with a closed list of tables.") },
       { name: t("Compatibilidade", "Compatibility"), body: t("Classificação por componente: Compatível, Compatível com avisos, Necessita de intervenção manual ou Incompatível.", "Per-component rating: Compatible, Compatible with warnings, Needs manual intervention or Incompatible.") },
-      { name: t("Comparação", "Comparison"), body: t("Cada registo é Novo, Idêntico, Alterado, Conflito, Inválido, Destino mais recente ou Ignorado — sem alterar dados. Relatório com filtros e exportação em CSV e JSON.", "Every record is New, Identical, Changed, Conflict, Invalid, Target newer or Ignored — without changing data. Report with filters and CSV/JSON export.") },
+      { name: t("Comparação", "Comparison"), body: t("Cada registo é Novo, Idêntico, Alterado, Conflito, Inválido, Destino mais recente ou Ignorado - sem alterar dados. Relatório com filtros e exportação em CSV e JSON.", "Every record is New, Identical, Changed, Conflict, Invalid, Target newer or Ignored - without changing data. Report with filters and CSV/JSON export.") },
       { name: t("Recuperação em 6 etapas", "Recovery in 6 stages"), body: t("Contas e fichas → tentativas SCORM → Feedback e conclusões → notas → registos de eventos → certificados.", "Accounts and forms → SCORM attempts → Feedback and completions → grades → event logs → certificates.") },
       { name: t("Registo de operações", "Operations log"), body: t("Uma operação por registo: uma interrupção nunca duplica nada e uma falha isolada não trava as outras. Repetir retoma os saltados e os falhados.", "One operation per record: an interruption never duplicates anything and a single failure doesn't block the rest. Re-running resumes skipped and failed records.") },
       { name: t("Desfazer", "Undo"), body: t("Reverte as escritas por ordem inversa, apenas nos registos que continuam como a recuperação os deixou.", "Reverts writes in reverse order, only on records still as the recovery left them.") }
@@ -130,8 +130,8 @@ export const caseStudies = {
       "Before there was a project, a convincing demonstration was needed: a pleasant experience and easy navigation the client could open and explore."
     ),
     solution: t(
-      ["Duas páginas estáticas — início e contactos — em HTML, CSS e JavaScript, sem dependências nem passo de build, publicadas no GitHub Pages."],
-      ["Two static pages — home and contacts — in HTML, CSS and JavaScript, with no dependencies or build step, published on GitHub Pages."]
+      ["Duas páginas estáticas - início e contactos - em HTML, CSS e JavaScript, sem dependências nem passo de build, publicadas no GitHub Pages."],
+      ["Two static pages - home and contacts - in HTML, CSS and JavaScript, with no dependencies or build step, published on GitHub Pages."]
     ),
     architecture: [
       { name: t("index.html", "index.html"), body: t("Visão geral: hero, apresentação institucional, áreas de especialização, porquê escolher, testemunhos, parceiros e chamada para acção.", "Overview: hero, institutional intro, areas of specialisation, why choose us, testimonials, partners and call to action.") },
@@ -141,7 +141,7 @@ export const caseStudies = {
     ],
     decisions: [
       { title: t("JavaScript nativo", "Vanilla JavaScript"), body: t("Sem frameworks: IntersectionObserver para revelações e contadores, listeners de scroll para a barra de progresso e o estado da navegação.", "No frameworks: IntersectionObserver for reveals and counters, scroll listeners for the progress bar and navigation state.") },
-      { title: t("Formulário de demonstração", "Demo form"), body: t("Valida os campos e mostra um estado de sucesso, sem envio — adequado a uma demo, a ligar a um backend num projecto real.", "Validates fields and shows a success state, without sending — fine for a demo, to be wired to a backend in a real project.") }
+      { title: t("Formulário de demonstração", "Demo form"), body: t("Valida os campos e mostra um estado de sucesso, sem envio - adequado a uma demo, a ligar a um backend num projecto real.", "Validates fields and shows a success state, without sending - fine for a demo, to be wired to a backend in a real project.") }
     ],
     results: null,
     notes: null,
@@ -150,8 +150,8 @@ export const caseStudies = {
 
   "ozua-consultoria": {
     context: t(
-      "Website single page para a Ozua, um centro de formação profissional — consultoria e treinamentos.",
-      "A single-page website for Ozua, a professional training centre — consulting and training."
+      "Website single page para a Ozua, um centro de formação profissional - consultoria e treinamentos.",
+      "A single-page website for Ozua, a professional training centre - consulting and training."
     ),
     problem: t(
       "Reconstruir um site que não chegou a ser lançado, com melhorias de detalhe, a partir de um design de outro autor.",
@@ -178,12 +178,12 @@ export const caseStudies = {
 
   "uor-website": {
     context: t(
-      "Website para a Universidade Óscar Ribas — a universidade onde me licenciei.",
-      "A website for Universidade Óscar Ribas — the university I graduated from."
+      "Website para a Universidade Óscar Ribas - a universidade onde me licenciei.",
+      "A website for Universidade Óscar Ribas - the university I graduated from."
     ),
     problem: t(
-      "Reunir numa página a oferta da universidade — cursos, ensino semipresencial, números, testemunhos, acesso ao portal académico, notícias e contactos — utilizável em qualquer dispositivo.",
-      "Bring the university's offer together on one page — courses, blended learning, key numbers, testimonials, access to the academic portal, news and contacts — usable on any device."
+      "Reunir numa página a oferta da universidade - cursos, ensino semipresencial, números, testemunhos, acesso ao portal académico, notícias e contactos - utilizável em qualquer dispositivo.",
+      "Bring the university's offer together on one page - courses, blended learning, key numbers, testimonials, access to the academic portal, news and contacts - usable on any device."
     ),
     solution: t(
       ["Uma página em HTML, CSS e JavaScript nativo, com carrossel principal, secções para cada tema e menu mobile, publicada no GitHub Pages."],

@@ -289,6 +289,29 @@ cliente pequenas. Cada secção tem composição e movimento próprios:
   coincidiam: o header não ficava ancorado nas transições. Passou a estilo inline.
   Regra: nomes de view transition nunca em CSS Modules.
 
+## 3.5 Terminal (Fase 7)
+
+`components/terminal/`:
+- `commands.js` - registo puro: `help, about, projects, skills, experience, contact,
+  github, linkedin, clear, exit` + atalhos `whoami, ls, cls, quit, ?`. As respostas são
+  geradas a partir de `data/` (perfil, projectos, experiência, clientes, competências):
+  nenhum facto é reescrito à mão. Erros com sugestão ("Querias dizer…?", distância de
+  edição ≤ 2). Tab completa o prefixo único ou o prefixo comum e lista candidatos.
+- `strings.js` - textos PT/EN do terminal (sem travessões).
+- `Terminal.jsx` - diálogo modal (`role="dialog"`, `aria-modal`), foco preso, fundo
+  `inert` e scroll bloqueado, saída num `role="log"` polite, histórico ↑/↓ guardado em
+  `sessionStorage` (tolerante a falhas), Ctrl+L limpa, Ctrl+C cancela a linha, Esc fecha,
+  sugestões clicáveis, revelação discreta bloco a bloco (desligada com reduced motion),
+  links de projecto para os case studies, `github`/`linkedin` abrem num novo separador
+  com link de recurso. Mobile: folha a ecrã inteiro, input a 16px (sem zoom no iOS).
+- `TerminalProvider.jsx` - atalho global Ctrl/⌘+K (alterna) e ` (abre, fora de campos
+  de texto); fecha ao mudar de rota; o chunk do terminal não entra no carregamento
+  inicial (carrega em idle ou na primeira abertura).
+- **Bug corrigido:** o foco não voltava ao botão ao fechar, porque o header continuava
+  `inert` durante a animação de saída. O fundo é agora libertado quando o fecho começa
+  (`useIsPresent`), e o foco é restaurado depois do commit do React.
+- Estilos num CSS Module; as regras legadas do terminal saíram do `globals.css`.
+
 ## 4. Projectos — factos verificados nos repositórios
 
 | Projecto | Confirmado no repositório | Ano (1.º commit) |
@@ -316,7 +339,7 @@ Os anos são a data de criação do repositório.
 | 4 | Hero (sequência de entrada), SmoothScroll (Lenis), CustomCursor, Magnetic, scroll storytelling | ✅ |
 | 5 | Secções: Introduction, Selected Work, About, Experience, Expertise, Contact | ✅ |
 | 6 | `/[lang]/projects/[slug]` com case studies | ✅ (imagens reais: pendente de material publicável) |
-| 7 | Terminal v2: histórico ↑/↓, Tab autocomplete, sugestões, atalho global, focus trap, comandos `github`/`linkedin` | — |
+| 7 | Terminal v2: histórico ↑/↓, Tab autocomplete, sugestões, atalho global, focus trap, comandos `github`/`linkedin` | ✅ |
 | 8 | SEO: metadata por idioma, OG/Twitter, sitemap, robots, canonical + hreflang, JSON-LD `Person`, ícones; Lighthouse | — |
 | 9 | Testes: lint, build, navegação, mobile, links; deploy | — |
 

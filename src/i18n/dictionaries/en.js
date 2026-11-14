@@ -1,7 +1,7 @@
 /** Keep the same shape as pt.js */
 const en = {
   meta: {
-    title: "Kelsio Miguel — Full-Stack Developer & LMS Engineer",
+    title: "Kelsio Miguel - Full-Stack Developer & LMS Engineer",
     description:
       "Portfolio of Kelsio Miguel: full-stack development, Moodle and Totara platform engineering, systems integration and infrastructure. Lisbon, Portugal."
   },
@@ -9,7 +9,7 @@ const en = {
     skipToContent: "Skip to content",
     mainNav: "Main navigation",
     footerNav: "Footer navigation",
-    home: "Kelsio Miguel — home",
+    home: "Kelsio Miguel - home",
     openMenu: "Open menu",
     closeMenu: "Close menu",
     language: "Language",
@@ -30,7 +30,7 @@ const en = {
   hero: {
     title: "Creative Developer / Software Engineer",
     description:
-      "I turn complex problems into functional digital experiences. Code, systems and people — connected with purpose.",
+      "I turn complex problems into functional digital experiences. Code, systems and people - connected with purpose.",
     ctaWork: "View work",
     ctaTerminal: "Open terminal",
     scroll: "Scroll",
@@ -96,7 +96,7 @@ const en = {
     title: "Between code and context.",
     emphasis: "That's where I create value.",
     paragraphs: [
-      "I hold a BSc in Computer Engineering and Communications from Universidade Óscar Ribas and have spent more than 4 years in information technology — today as a Customer Solutions Developer at EDUdigital, in Lisbon.",
+      "I hold a BSc in Computer Engineering and Communications from Universidade Óscar Ribas and have spent more than 4 years in information technology - today as a Customer Solutions Developer at EDUdigital, in Lisbon.",
       "I like to understand the problem before choosing the technology. I go from gathering requirements with the client to the code, and from the code to the server it runs on.",
       "I'm interested in the architecture behind applications: how systems connect, authenticate and stay stable in production. That's why I work across frontend, backend and infrastructure."
     ],
@@ -118,7 +118,7 @@ const en = {
   expertise: {
     label: "Areas of expertise",
     title: "What I do",
-    aside: "Skills applied to real projects — no progress bars, no subjective ratings.",
+    aside: "Skills applied to real projects - no progress bars, no subjective ratings.",
     areas: [
       {
         id: "backend",
@@ -174,7 +174,7 @@ const en = {
     send: "Send email",
     copy: "Copy email",
     copied: "Email copied",
-    copyFailed: "Couldn't copy — use the address above."
+    copyFailed: "Couldn't copy - use the address above."
   },
   footer: {
     navigation: "Navigation",

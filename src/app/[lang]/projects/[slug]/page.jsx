@@ -34,11 +34,11 @@ export async function generateMetadata({ params }) {
     description,
     openGraph: {
       type: "article",
-      title: `${project.title} — ${profile.name}`,
+      title: `${project.title} - ${profile.name}`,
       description,
       locale: ogLocale[lang]
     },
-    twitter: { card: "summary", title: `${project.title} — ${profile.name}`, description },
+    twitter: { card: "summary", title: `${project.title} - ${profile.name}`, description },
     ...(profile.siteUrl && {
       alternates: {
         canonical: `/${lang}/projects/${slug}`,
