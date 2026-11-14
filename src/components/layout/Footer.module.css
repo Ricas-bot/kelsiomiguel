@@ -16,7 +16,7 @@
   letter-spacing: -0.03em;
   text-transform: uppercase;
   white-space: nowrap;
-  color: var(--color-surface-2);
+  color: var(--color-text-subtle); /* 3:1 - meets AA for large text */
   user-select: none;
 }
 

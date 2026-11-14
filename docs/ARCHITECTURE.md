@@ -312,6 +312,53 @@ cliente pequenas. Cada secção tem composição e movimento próprios:
   (`useIsPresent`), e o foco é restaurado depois do commit do React.
 - Estilos num CSS Module; as regras legadas do terminal saíram do `globals.css`.
 
+## 3.6 SEO e optimização (Fase 8)
+
+### SEO técnico
+- `app/sitemap.js` (todas as páginas × idiomas, com hreflang), `app/robots.js`,
+  `app/manifest.js`, `app/apple-icon.jsx` (180×180), `app/icon.svg`.
+- Imagens de partilha geradas no build: `[lang]/opengraph-image.jsx` e
+  `[lang]/projects/[slug]/opengraph-image.jsx` (1200×630, `generateStaticParams`),
+  com a tipografia do site (WOFF em `src/assets/fonts`, OFL 1.1, porque o Satori
+  não lê WOFF2). Cartões `summary_large_image`.
+- JSON-LD (`components/seo/JsonLd.jsx`, `lib/structuredData.js`): `Person` na home;
+  `SoftwareSourceCode` (com repositório) ou `CreativeWork` (privado) nos case studies.
+- **URL base** (`profile.siteUrl`): `NEXT_PUBLIC_SITE_URL` → `VERCEL_PROJECT_PRODUCTION_URL`
+  → nada. Sem URL base não há canonical, hreflang nem sitemap (fica vazio), e o
+  `og:image` usa o fallback do Next (`localhost`): **num alojamento que não seja o
+  Vercel, definir `NEXT_PUBLIC_SITE_URL` antes do build.** Verificado com um build
+  local apontado para o próprio servidor de teste (canonical, hreflang com
+  `x-default`, sitemap com 14 URLs, robots com Sitemap/Host).
+- Proxy de idioma exclui `apple-icon` (rota de metadata sem extensão).
+- Headers: `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`,
+  `Permissions-Policy`, `Cross-Origin-Opener-Policy`.
+
+### Auditoria Lighthouse 13.6.0 (build de produção local, 2026-11-14)
+
+| Página | Perf | A11y | BP | SEO |
+|---|---|---|---|---|
+| Home PT (mobile) | 99 | 100 | 100 | 100 |
+| Home PT (desktop) | 100 | 100 | 100 | 100 |
+| Home EN (mobile) | 99 | 100 | 100 | 100 |
+| Cross-Tenant Access (mobile) | 100 | 100 | 100 | 100 |
+| Progress Recovery EN (mobile) | 100 | 100 | 100 | 100 |
+| UÓR Website (desktop) | 100 | 100 | 100 | 100 |
+
+Ponto de partida (antes das correcções): home mobile Perf 65 (LCP 4,7 s, TBT 710 ms)
+e A11y 93 em todas as páginas. Corrigido:
+- **LCP**: o parágrafo do hero (elemento LCP) deixou de estar escondido pela intro.
+- **TBT**: `lib/whenNear.js` adia o setup de SplitText/ScrollTrigger dos reveals
+  abaixo do ecrã até se aproximarem do viewport (os visíveis no carregamento continuam
+  a ser preparados antes da pintura, sem flicker).
+- **ARIA**: o SplitText só aplica `aria-label` a títulos (proibido em `<p>`).
+- **Contraste**: novo token `--color-text-faint` (#7f7f7a, ≥4,5:1) para labels
+  pequenas; `--color-text-subtle` (3:1) fica só para texto grande; palavras da
+  Introdução começam a 40% (3,5:1); wordmark do footer com contraste de texto grande;
+  o foco da Expertise passou de opacidade para cor (sem baixar o contraste).
+- **Nome acessível do logo** inclui o texto visível "KM" (WCAG 2.5.3).
+
+Nota: são medições locais (sem CDN nem rede real); repetir após o deploy.
+
 ## 4. Projectos — factos verificados nos repositórios
 
 | Projecto | Confirmado no repositório | Ano (1.º commit) |
@@ -340,7 +387,7 @@ Os anos são a data de criação do repositório.
 | 5 | Secções: Introduction, Selected Work, About, Experience, Expertise, Contact | ✅ |
 | 6 | `/[lang]/projects/[slug]` com case studies | ✅ (imagens reais: pendente de material publicável) |
 | 7 | Terminal v2: histórico ↑/↓, Tab autocomplete, sugestões, atalho global, focus trap, comandos `github`/`linkedin` | ✅ |
-| 8 | SEO: metadata por idioma, OG/Twitter, sitemap, robots, canonical + hreflang, JSON-LD `Person`, ícones; Lighthouse | — |
+| 8 | SEO: metadata por idioma, OG/Twitter, sitemap, robots, canonical + hreflang, JSON-LD `Person`, ícones; Lighthouse | ✅ |
 | 9 | Testes: lint, build, navegação, mobile, links; deploy | — |
 
 ---

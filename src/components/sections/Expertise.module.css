@@ -14,23 +14,25 @@
   gap: var(--space-3) var(--space-4);
   padding-block: var(--space-6);
   border-bottom: var(--border);
-  transition: opacity var(--duration-slow) var(--ease-out-quart);
 }
 
-/* Scroll focus (only once FocusList has mounted). */
-.list[data-focus-ready] .item {
-  opacity: 0.32;
+/* Scroll focus (only once FocusList has mounted). Done with colour, not
+   opacity: inactive areas stay readable (title 4.7:1, text 5.8:1) and the
+   active one is brought forward in full white. */
+.list[data-focus-ready] .title {
+  color: var(--color-text-faint);
 }
 
-.list[data-focus-ready] .item[data-active] {
-  opacity: 1;
+.list[data-focus-ready] .item[data-active] .title,
+.list[data-focus-ready] .item[data-active] .description {
+  color: var(--color-text);
 }
 
 .index {
   padding-top: 0.55em;
   font-family: var(--font-mono);
   font-size: var(--text-label);
-  color: var(--color-text-subtle);
+  color: var(--color-text-faint);
   transition: color var(--duration-slow) var(--ease-out-quart);
 }
 
@@ -39,6 +41,7 @@
 }
 
 .title {
+  transition: color var(--duration-slow) var(--ease-out-quart);
   font-size: var(--text-3xl);
   font-weight: 700;
   font-stretch: 82%;
@@ -53,6 +56,7 @@
 }
 
 .description {
+  transition: color var(--duration-slow) var(--ease-out-quart);
   max-width: 50ch;
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);

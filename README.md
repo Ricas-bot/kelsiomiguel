@@ -41,7 +41,7 @@ O site vive em `/pt` e `/en`. `/` redirecciona conforme a escolha guardada (cook
 - `docs/ARCHITECTURE.md`: auditoria, arquitectura, plano por fases, dependências e decisões técnicas
 
 ## Antes de publicar
-1. Definir `NEXT_PUBLIC_SITE_URL` quando houver domínio (activa canonical e hreflang).
+1. **URL do site:** no Vercel é detectado automaticamente. Noutro alojamento, ou com domínio próprio, definir `NEXT_PUBLIC_SITE_URL` (ex.: o domínio final) antes do build: activa canonical, hreflang, sitemap e URLs absolutos das imagens de partilha.
 2. Conteúdo verificado contra o CV e o GitHub vive em `src/data/` (ver `docs/ARCHITECTURE.md` §1.1); textos de interface em `src/i18n/dictionaries/`.
 3. Adicionar imagens em `public/images/projects/` (apenas material público).
 

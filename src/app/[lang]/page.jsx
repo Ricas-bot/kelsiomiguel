@@ -6,6 +6,8 @@ import Experience from "@/components/sections/Experience";
 import Expertise from "@/components/sections/Expertise";
 import Contact from "@/components/sections/Contact";
 import PageTransition from "@/components/layout/PageTransition";
+import JsonLd from "@/components/seo/JsonLd";
+import { personSchema } from "@/lib/structuredData";
 import { getDictionary } from "@/i18n/getDictionary";
 
 /**
@@ -18,6 +20,7 @@ export default async function HomePage({ params }) {
 
   return (
     <PageTransition>
+      <JsonLd data={personSchema(lang, dict.meta.description)} />
       <Hero lang={lang} t={dict.hero} />
       <Introduction t={dict.intro} />
       <Projects lang={lang} t={dict.work} a11y={dict.a11y} />

@@ -13,6 +13,7 @@
 
   --color-text: #f1f0ec;            /* soft white — 17.4:1 on --color-bg   */
   --color-text-muted: #8f8f8a;      /* secondary — 6.1:1 on --color-bg     */
+  --color-text-faint: #7f7f7a;      /* 4.9:1 - small labels, indexes, metadata */
   --color-text-subtle: #5e5e5a;     /* 3.06:1 — large display type / decoration only */
 
   --color-line: rgba(241, 240, 236, 0.12);

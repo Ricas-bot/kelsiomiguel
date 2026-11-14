@@ -5,10 +5,10 @@ import { ScrollTrigger, useGSAP } from "@/lib/gsap";
 
 /**
  * Scroll-driven focus: the child marked [data-focus-item] crossing the
- * reading line gets `data-active`; CSS dims the rest. The list only dims
- * once this has mounted (`data-focus-ready`), so without JS everything is
- * fully legible. Opacity only — no movement — so it stays on with reduced
- * motion.
+ * reading line gets `data-active`; CSS brings it forward with colour, never
+ * by lowering the contrast of the rest. Styling applies only once this has
+ * mounted (`data-focus-ready`). Colour only, no movement, so it stays on
+ * with reduced motion.
  */
 export default function FocusList({ as: Tag = "ol", className, children, line = "55%" }) {
   const ref = useRef(null);

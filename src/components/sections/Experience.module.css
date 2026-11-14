@@ -104,7 +104,7 @@
   content: "-";
   position: absolute;
   left: 0;
-  color: var(--color-text-subtle);
+  color: var(--color-text-faint);
 }
 
 .more summary {
@@ -207,7 +207,7 @@
   font-size: var(--text-label);
   letter-spacing: var(--tracking-mono);
   text-transform: uppercase;
-  color: var(--color-text-subtle);
+  color: var(--color-text-faint);
 }
 
 .table td.scope::before {
@@ -270,7 +270,7 @@
     font-weight: 400;
     letter-spacing: var(--tracking-mono);
     text-transform: uppercase;
-    color: var(--color-text-subtle);
+    color: var(--color-text-faint);
     border-bottom: var(--border);
   }
 

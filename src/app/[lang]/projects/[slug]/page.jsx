@@ -8,11 +8,13 @@ import ProjectArt from "@/components/ui/ProjectArt";
 import ProjectMorph from "@/components/ui/ProjectMorph";
 import { TagList } from "@/components/ui/Tag";
 import CaseToc from "@/components/case/CaseToc";
+import JsonLd from "@/components/seo/JsonLd";
+import { projectSchema } from "@/lib/structuredData";
 import { projects } from "@/data/projects";
 import { getCaseStudy } from "@/data/caseStudies";
 import { profile } from "@/data/profile";
 import { getDictionary } from "@/i18n/getDictionary";
-import { htmlLang, locales, ogLocale } from "@/i18n/config";
+import { defaultLocale, htmlLang, locales, ogLocale } from "@/i18n/config";
 import { pad } from "@/lib/utils";
 import styles from "@/components/case/CaseStudy.module.css";
 
@@ -38,11 +40,14 @@ export async function generateMetadata({ params }) {
       description,
       locale: ogLocale[lang]
     },
-    twitter: { card: "summary", title: `${project.title} - ${profile.name}`, description },
+    twitter: { card: "summary_large_image", title: `${project.title} - ${profile.name}`, description },
     ...(profile.siteUrl && {
       alternates: {
         canonical: `/${lang}/projects/${slug}`,
-        languages: Object.fromEntries(locales.map((l) => [htmlLang[l], `/${l}/projects/${slug}`]))
+        languages: {
+          ...Object.fromEntries(locales.map((l) => [htmlLang[l], `/${l}/projects/${slug}`])),
+          "x-default": `/${defaultLocale}/projects/${slug}`
+        }
       }
     })
   };
@@ -81,6 +86,7 @@ export default async function CaseStudyPage({ params }) {
 
   return (
     <PageTransition>
+      <JsonLd data={projectSchema(project, lang)} />
       <article className={styles.page} aria-labelledby="case-title">
         {/* ---------- Hero ---------- */}
         <header className={`shell ${styles.hero}`}>

@@ -46,7 +46,7 @@
   font-size: var(--text-label);
   font-weight: 400;
   letter-spacing: var(--tracking-mono);
-  color: var(--color-text-subtle);
+  color: var(--color-text-faint);
 }
 
 .active .index {

@@ -48,7 +48,8 @@ export default function Hero({ lang, t }) {
             <p className={styles.role} data-intro-el>
               {t.title}
             </p>
-            <p className={styles.statement} data-intro-el>
+            {/* Not part of the intro: this is the LCP element, painted on first render. */}
+            <p className={styles.statement}>
               {t.description}
             </p>
             <HeroActions lang={lang} labels={{ work: t.ctaWork, terminal: t.ctaTerminal }} />

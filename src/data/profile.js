@@ -51,9 +51,13 @@ export const profile = {
   ],
 
   /**
-   * Public site URL. No domain yet (confirmed 2026-11-08): set
-   * NEXT_PUBLIC_SITE_URL when one exists. Until then, absolute URLs
-   * (canonical, sitemap, Open Graph) are omitted rather than faked.
+   * Public site URL, used for canonical, hreflang, sitemap and Open Graph.
+   * No custom domain yet (confirmed 2026-11-08). Resolution order:
+   *   1. NEXT_PUBLIC_SITE_URL - set it when the domain exists;
+   *   2. VERCEL_PROJECT_PRODUCTION_URL - provided by Vercel at build time;
+   *   3. null - absolute URLs are omitted rather than invented.
    */
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || null
+  siteUrl:
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : null)
 };

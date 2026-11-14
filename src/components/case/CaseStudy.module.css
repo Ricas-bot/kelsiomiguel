@@ -107,7 +107,7 @@
   font-size: var(--text-label);
   letter-spacing: var(--tracking-mono);
   text-transform: uppercase;
-  color: var(--color-text-subtle);
+  color: var(--color-text-faint);
 }
 
 .toc {
@@ -133,7 +133,7 @@
 .tocLink span {
   font-family: var(--font-mono);
   font-size: var(--text-label);
-  color: var(--color-text-subtle);
+  color: var(--color-text-faint);
   transition: color var(--duration-fast) var(--ease-out-quart);
 }
 
@@ -163,7 +163,7 @@
   font-size: var(--text-label);
   letter-spacing: var(--tracking-mono);
   text-transform: uppercase;
-  color: var(--color-text-subtle);
+  color: var(--color-text-faint);
 }
 
 .facts dd {
@@ -254,7 +254,7 @@
   padding-top: 0.3em;
   font-family: var(--font-mono);
   font-size: var(--text-label);
-  color: var(--color-text-subtle);
+  color: var(--color-text-faint);
 }
 
 .flowName {
@@ -325,7 +325,7 @@
 
 .notes li::before {
   content: "!";
-  color: var(--color-text-subtle);
+  color: var(--color-text-faint);
 }
 
 /* ---------- Next project ------------------------------------------------ */

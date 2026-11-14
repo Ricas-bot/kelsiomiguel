@@ -67,7 +67,7 @@ export async function generateMetadata({ params }) {
       alternateLocale: locales.filter((l) => l !== lang).map((l) => ogLocale[l])
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: dict.meta.title,
       description: dict.meta.description
     },

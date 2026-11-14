@@ -91,14 +91,10 @@ export default function Navbar({ lang, dict }) {
       )}
     >
       <div className={cn("shell", styles.inner)}>
-        <Link
-          href={`/${lang}`}
-          className={styles.logo}
-          aria-label={dict.a11y.home}
-          onClick={onLogoClick}
-          data-intro-el
-        >
+        <Link href={`/${lang}`} className={styles.logo} onClick={onLogoClick} data-intro-el>
+          {/* Visible text "KM" stays in the accessible name (WCAG 2.5.3). */}
           KM<span aria-hidden="true">®</span>
+          <span className="sr-only"> - {dict.a11y.home}</span>
         </Link>
 
         <nav className={styles.nav} aria-label={dict.a11y.mainNav} data-intro-el>

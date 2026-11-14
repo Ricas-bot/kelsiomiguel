@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { gsap, SplitText, useGSAP } from "@/lib/gsap";
 import { duration as d, gsapEase, MOTION_OK_QUERY, stagger as st } from "@/lib/motion";
+import { whenNear } from "@/lib/whenNear";
 
 /**
  * Scroll-triggered reveal primitive (GSAP + ScrollTrigger).
@@ -13,13 +14,16 @@ import { duration as d, gsapEase, MOTION_OK_QUERY, stagger as st } from "@/lib/m
  *  - "words"   : text is split into masked words — for short, punchy titles.
  *  - "clip"    : media wipes in from the bottom via clip-path (image reveal).
  *
- * Reduced motion: animations are registered inside gsap.matchMedia with
- * `prefers-reduced-motion: no-preference`, so users who opt out simply see
- * the final state — no hidden content, no transforms.
+ * Performance: setup is deferred until the element nears the viewport
+ * (whenNear), so below-the-fold splits don't block the main thread at load.
  *
- * Content is server-rendered visible; GSAP sets the start state in a layout
- * effect before first paint after hydration, so nothing depends on JS to be
- * readable.
+ * Accessibility: SplitText labels the original element only when it is a
+ * heading (aria-label is valid there); on paragraphs the split lines keep
+ * whole words, so no label is added (aria-label on <p> is not allowed).
+ *
+ * Reduced motion: animations are registered inside gsap.matchMedia with
+ * `prefers-reduced-motion: no-preference`; users who opt out see the final
+ * state. Content is server-rendered visible; nothing depends on JS to read.
  */
 export default function Reveal({
   as: Tag = "div",
@@ -36,58 +40,63 @@ export default function Reveal({
   useGSAP(
     () => {
       const el = ref.current;
-      if (!el) return;
-
+      if (!el) return undefined;
       const mm = gsap.matchMedia();
 
-      mm.add(MOTION_OK_QUERY, () => {
-        const scrollTrigger = { trigger: el, start, once: true };
+      const setup = () =>
+        mm.add(MOTION_OK_QUERY, () => {
+          const scrollTrigger = { trigger: el, start, once: true };
 
-        if (variant === "lines" || variant === "words") {
-          const type = variant === "lines" ? "lines" : "words,lines";
-          const target = variant === "lines" ? "lines" : "words";
+          if (variant === "lines" || variant === "words") {
+            const type = variant === "lines" ? "lines" : "words,lines";
+            const target = variant === "lines" ? "lines" : "words";
 
-          const split = SplitText.create(el, {
-            type,
-            mask: target,
-            autoSplit: true,
-            onSplit: (self) =>
-              gsap.from(self[target], {
-                yPercent: 110,
-                duration: d.reveal,
-                ease: gsapEase.outExpo,
-                stagger: stagger || (variant === "lines" ? st.base : st.tight),
-                delay,
-                scrollTrigger
-              })
-          });
+            const split = SplitText.create(el, {
+              type,
+              mask: target,
+              autoSplit: true,
+              aria: /^H[1-6]$/.test(el.tagName) ? "auto" : "none",
+              onSplit: (self) =>
+                gsap.from(self[target], {
+                  yPercent: 110,
+                  duration: d.reveal,
+                  ease: gsapEase.outExpo,
+                  stagger: stagger || (variant === "lines" ? st.base : st.tight),
+                  delay,
+                  scrollTrigger
+                })
+            });
 
-          return () => split.revert();
-        }
+            return () => split.revert();
+          }
 
-        if (variant === "clip") {
-          gsap.from(el, {
-            clipPath: "inset(100% 0% 0% 0%)",
-            duration: d.reveal,
-            ease: gsapEase.inOut,
+          if (variant === "clip") {
+            gsap.from(el, {
+              clipPath: "inset(100% 0% 0% 0%)",
+              duration: d.reveal,
+              ease: gsapEase.inOut,
+              delay,
+              scrollTrigger
+            });
+            return undefined;
+          }
+
+          gsap.from(stagger ? el.children : el, {
+            y: 40,
+            autoAlpha: 0,
+            duration: d.slow,
+            stagger: stagger || 0,
             delay,
             scrollTrigger
           });
-          return;
-        }
-
-        const targets = stagger ? el.children : el;
-        gsap.from(targets, {
-          y: 40,
-          autoAlpha: 0,
-          duration: d.slow,
-          stagger: stagger || 0,
-          delay,
-          scrollTrigger
+          return undefined;
         });
-      });
 
-      return () => mm.revert();
+      const stop = whenNear(el, setup);
+      return () => {
+        stop();
+        mm.revert();
+      };
     },
     { scope: ref, dependencies: [variant, delay, stagger, start] }
   );
