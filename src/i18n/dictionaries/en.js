@@ -59,7 +59,7 @@ const en = {
   work: {
     label: "Selected work",
     title: "Featured projects",
-    aside: "From LMS plugin to institutional website: public projects, with technologies confirmed in the code.",
+    aside: "From LMS plugin to institutional website: public and private work, with technologies confirmed in the code.",
     featured: "Lead project",
     more: "More projects",
     live: "View live",
@@ -79,6 +79,7 @@ const en = {
       context: "Context",
       problem: "Problem",
       solution: "Solution",
+      screens: "On screen",
       architecture: "Architecture",
       stack: "Stack",
       decisions: "Technical decisions",
@@ -87,9 +88,21 @@ const en = {
     },
     year: "Year",
     client: "Client",
+    owner: "Product of",
     category: "Category",
     links: "Links",
-    next: "Next project"
+    next: "Next project",
+    gallery: {
+      open: "Enlarge image",
+      dialog: "Enlarged image",
+      close: "Close",
+      prev: "Previous image",
+      next: "Next image",
+      of: "of",
+      compare: "Compare versions",
+      before: "Before",
+      after: "After"
+    }
   },
   about: {
     label: "About me",

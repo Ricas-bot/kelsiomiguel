@@ -4,14 +4,16 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Github } from "lucide-react";
 import PageTransition from "@/components/layout/PageTransition";
 import Reveal from "@/components/effects/Reveal";
 import Button from "@/components/ui/Button";
-import ProjectArt from "@/components/ui/ProjectArt";
+import ProjectCover from "@/components/ui/ProjectCover";
 import ProjectMorph from "@/components/ui/ProjectMorph";
 import { TagList } from "@/components/ui/Tag";
 import CaseToc from "@/components/case/CaseToc";
+import CaseGallery from "@/components/case/CaseGallery";
 import JsonLd from "@/components/seo/JsonLd";
 import { projectSchema } from "@/lib/structuredData";
 import { projects } from "@/data/projects";
 import { getCaseStudy } from "@/data/caseStudies";
+import { getMedia } from "@/data/media";
 import { profile } from "@/data/profile";
 import { getDictionary } from "@/i18n/getDictionary";
 import { defaultLocale, htmlLang, locales, ogLocale } from "@/i18n/config";
@@ -64,11 +66,14 @@ export default async function CaseStudyPage({ params }) {
   const dict = await getDictionary(lang);
   const t = dict.caseStudy;
   const w = dict.work;
+  const media = getMedia(slug);
+  const hasScreens = Boolean(media?.gallery?.length || media?.compare?.length);
 
   const sections = [
     { id: "context", label: t.sections.context },
     { id: "problem", label: t.sections.problem },
     { id: "solution", label: t.sections.solution },
+    hasScreens && { id: "screens", label: t.sections.screens },
     { id: "architecture", label: t.sections.architecture },
     { id: "stack", label: t.sections.stack },
     { id: "decisions", label: t.sections.decisions },
@@ -99,6 +104,7 @@ export default async function CaseStudyPage({ params }) {
             <span>{project.category[lang]}</span>
             <span>{project.year}</span>
             {project.client && <span>{project.client}</span>}
+            {project.owner && <span>{project.owner}</span>}
           </p>
 
           <Reveal as="h1" id="case-title" variant="words" className={styles.title}>
@@ -129,7 +135,14 @@ export default async function CaseStudyPage({ params }) {
         <div className={`shell ${styles.media}`}>
           <ProjectMorph slug={project.slug}>
             <div>
-              <ProjectArt project={project} index={index} size="lg" />
+              <ProjectCover
+                project={project}
+                index={index}
+                cover={media?.cover}
+                size="lg"
+                sizes="(min-width: 1000px) 60vw, 62vw"
+                preload
+              />
             </div>
           </ProjectMorph>
         </div>
@@ -147,6 +160,12 @@ export default async function CaseStudyPage({ params }) {
                 <div>
                   <dt>{t.client}</dt>
                   <dd>{project.client}</dd>
+                </div>
+              )}
+              {project.owner && (
+                <div>
+                  <dt>{t.owner}</dt>
+                  <dd>{project.owner}</dd>
                 </div>
               )}
               <div>
@@ -179,6 +198,13 @@ export default async function CaseStudyPage({ params }) {
                 ))}
               </Reveal>
             </section>
+
+            {hasScreens && (
+              <section id="screens" aria-labelledby="screens-title" className={styles.block}>
+                {heading("screens")}
+                <CaseGallery items={media.gallery} compare={media.compare} labels={t.gallery} lang={lang} />
+              </section>
+            )}
 
             <section id="architecture" aria-labelledby="architecture-title" className={styles.block}>
               {heading("architecture")}

@@ -2,4 +2,8 @@ node_modules
 .next
 out
 .env*
+!.env.example
 .DS_Store
+
+# Raw screenshots (unredacted): processed copies live in src/assets/projects
+src/assets/portfolio-img.zip

@@ -2,12 +2,33 @@
  * Selected work. Every field was verified against the public repository
  * on 2026-11-08 (README, package.json, source files, GitHub Pages), or —
  * for private work — against material Kelsio provided (noted inline).
- * `year` = repository creation year. `liveUrl` = GitHub Pages (HTTP 200).
+ * `year` = repository creation year. `liveUrl` = public site (GitHub Pages
+ * checked HTTP 200; client sites as given by Kelsio).
  * `repoUrl: null` = private code: the UI shows "private" and links nowhere.
  * `client` (optional) = named with Kelsio's approval.
+ * `owner` (optional) = company that owns the product (shown as "Product of").
+ * Screenshots live in ./media.js.
  * Case-study fields (context, problem, solution…) are added in Phase 6.
  */
 export const projects = [
+  {
+    // Source: local_lnf README, version.php, tests/ and git history (local
+    // checkout, 2026-11-14) + Kelsio's description of his role. EDUdigital
+    // product, private repository: never link it or name other contributors.
+    slug: "sdf",
+    title: "Diagnóstico Formativo",
+    art: "SDF",
+    year: 2025,
+    owner: "EDUdigital",
+    category: { pt: "Plugin Totara · Produto EDUdigital", en: "Totara plugin · EDUdigital product" },
+    description: {
+      pt: "SDF - Sistema de Diagnóstico Formativo: plugin para Totara 19 que gere o ciclo anual de necessidades de formação, da proposta do RH à validação pelas Direções, aprovação, cronograma e inscrição automática.",
+      en: "SDF - Training Needs Diagnosis System: a Totara 19 plugin that runs the yearly training-needs cycle, from HR proposals to department validation, approval, schedule and automatic enrolment."
+    },
+    tags: ["PHP 8.1", "Totara 19", "Mustache", "JavaScript (AMD)", "PHPUnit"],
+    liveUrl: null,
+    repoUrl: null // EDUdigital, private
+  },
   {
     // Verified from source: version.php, db/*.php, classes/, tests/ (2026-11-08).
     // The repo README mentions a QA host and client tenant names — never
@@ -42,6 +63,42 @@ export const projects = [
     tags: ["PHP", "Totara 19", "HMAC-SHA256", "SCORM", "CSV / JSON"],
     liveUrl: null,
     repoUrl: null // private repository
+  },
+  {
+    // Source: the live site (HTML + screenshots, 2026-11-14) and Kelsio
+    // (designed and built it). The About page lists team members: never
+    // publish their names or photos.
+    slug: "technologic",
+    title: "Technologic",
+    art: "TL",
+    year: 2025,
+    category: { pt: "Website institucional · Next.js", en: "Corporate website · Next.js" },
+    description: {
+      pt: "Website da Technologic, empresa angolana de tecnologia: identidade escura e lima, serviços com pacotes e preços públicos, páginas institucionais e consentimento de cookies granular.",
+      en: "Website for Technologic, an Angolan technology company: a dark and lime identity, services with public packages and prices, company pages and granular cookie consent."
+    },
+    tags: ["Next.js", "React", "CSS Modules", "Bootstrap"],
+    liveUrl: "https://technologic.ao",
+    repoUrl: null
+  },
+  {
+    // Source: Kelsio (2026-11-14) + the Totara project memory/sessions
+    // (home, crossselingedu, BBB) and the local_oidcgraphsync source.
+    // Never name other client sites where the block runs. liveUrl given by
+    // Kelsio (2026-11-15); behind Cloudflare, so automated checks get a 403.
+    slug: "acores-platform",
+    title: "Plataforma APR Açores",
+    art: "APR",
+    year: 2026,
+    client: "Direção Regional dos Açores",
+    category: { pt: "Totara · UI/UX e plugins", en: "Totara · UI/UX and plugins" },
+    description: {
+      pt: "Quatro entregas na plataforma de formação da Administração Pública Regional dos Açores: nova home pública, bloco Crossselling, BigBlueButton adaptado ao Totara 19 e sincronização de atributos OIDC com o Microsoft Graph.",
+      en: "Four deliveries on the Azores Regional Public Administration training platform: a new public home, the Crossselling block, BigBlueButton adapted to Totara 19 and OIDC attribute sync with Microsoft Graph."
+    },
+    tags: ["PHP", "Totara 19", "JavaScript", "Microsoft Graph", "UI/UX"],
+    liveUrl: "https://learnit.servicos.azores.gov.pt/server/home/index.php",
+    repoUrl: null
   },
   {
     slug: "lbs-demo",

@@ -160,7 +160,9 @@
 .menuToggle {
   display: inline-flex;
   align-items: center;
+  justify-content: flex-end; /* icon stays flush with the gutter */
   gap: var(--space-3);
+  min-width: 44px; /* full touch target even when only the icon shows */
   min-height: 44px;
   padding: 0 0 0 var(--space-2);
   border: 0;

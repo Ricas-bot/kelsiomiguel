@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import ProjectArt from "@/components/ui/ProjectArt";
+import ProjectCover from "@/components/ui/ProjectCover";
 import ProjectMorph from "@/components/ui/ProjectMorph";
 import { TagList } from "@/components/ui/Tag";
 import { gsap } from "@/lib/gsap";
@@ -21,7 +21,7 @@ import styles from "./Projects.module.css";
  * Each row's title links to the case study (stretched over the row); live
  * and source links sit above it and stay external.
  */
-export default function ProjectList({ projects, startIndex = 0, lang, labels }) {
+export default function ProjectList({ projects, covers = {}, startIndex = 0, lang, labels }) {
   const fine = useMediaQuery(FINE_POINTER_QUERY, false);
   const [active, setActive] = useState(null);
   const listRef = useRef(null);
@@ -108,7 +108,7 @@ export default function ProjectList({ projects, startIndex = 0, lang, labels }) 
               <div className={styles.rowThumb} aria-hidden="true">
                 <ProjectMorph slug={project.slug}>
                   <div>
-                    <ProjectArt project={project} index={index} size="sm" />
+                    <ProjectCover project={project} index={index} cover={covers[project.slug]} size="sm" sizes="70vw" />
                   </div>
                 </ProjectMorph>
               </div>
@@ -129,10 +129,12 @@ export default function ProjectList({ projects, startIndex = 0, lang, labels }) 
                 exit={{ opacity: 0, scale: 0.92 }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               >
-                <ProjectArt
+                <ProjectCover
                   project={projects[active - startIndex]}
                   index={active}
+                  cover={covers[projects[active - startIndex].slug]}
                   size="sm"
+                  sizes="230px"
                 />
               </motion.div>
             )}

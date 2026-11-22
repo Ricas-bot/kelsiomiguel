@@ -1,0 +1,93 @@
+/* ---------- Window ------------------------------------------------------- */
+.frame {
+  overflow: hidden;
+  border: 1px solid var(--color-line-strong);
+  border-radius: 10px;
+  background: var(--color-bg-elevated);
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.7);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: 30px;
+  padding: 0 12px;
+  border-bottom: var(--border);
+}
+
+.dots {
+  display: flex;
+  gap: 5px;
+}
+
+.dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-line-strong);
+}
+
+.dots i:first-child {
+  background: var(--color-accent);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+/* Screenshots are light UIs: a white canvas keeps narrow ones seamless. */
+.screen {
+  display: grid;
+  background: #fff;
+}
+
+.screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.sm {
+  border-radius: 6px;
+}
+
+.sm .bar {
+  height: 16px;
+  padding: 0 7px;
+}
+
+.sm .dots {
+  gap: 3px;
+}
+
+.sm .dots i {
+  width: 4px;
+  height: 4px;
+}
+
+/* ---------- Phone -------------------------------------------------------- */
+.phone {
+  width: min(100%, 240px);
+  margin-inline: auto;
+  padding: 8px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: 34px;
+  background: #0b0b0a;
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.7);
+}
+
+.phoneScreen {
+  overflow: hidden;
+  border-radius: 26px;
+}
+
+.phoneScreen img {
+  display: block;
+  width: 100%;
+  height: auto;
+}

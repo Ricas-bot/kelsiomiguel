@@ -359,12 +359,72 @@ e A11y 93 em todas as páginas. Corrigido:
 
 Nota: são medições locais (sem CDN nem rede real); repetir após o deploy.
 
+## 3.7 Imagens dos projectos (2026-11-14)
+
+- **Origem:** capturas fornecidas pelo Kelsio (`src/assets/portfolio-img.zip`, **ignorado
+  pelo git** porque contém dados por tratar) e capturas do site público technologic.ao
+  (só cookies essenciais).
+- **Tratamento antes de entrar no repositório** (script com `sharp`, recortes e desfocagem
+  em coordenadas da imagem original): nomes de pessoas desfocados (Cross-Tenant, BBB);
+  Progress Recovery recortado às tabelas agregadas (sem usernames, audiências, nomes de
+  ficheiros nem datas); a página Sobre da Technologic (equipa) fica de fora. O SDF usa
+  dados de desenvolvimento. Exportado em WebP para `src/assets/projects/<slug>/`.
+- **Dados:** `src/data/media.js` (import estático → `next/image` com dimensões; alt e
+  legenda PT/EN). Só Server Components importam este ficheiro; os componentes cliente
+  recebem por props apenas o que mostram (o `ProjectList` recebe só as capas).
+- **Onde aparecem:** `ProjectCover` (capa numa janela sobre a arte tipográfica: projecto
+  principal, pré-visualização no hover, miniaturas mobile e hero do case study, este com
+  `preload`); secção **"Em ecrã"** do case study (`CaseGallery`): grelha com legendas,
+  lightbox em `<dialog>` nativo (foco, Escape e devolução do foco pela plataforma; setas
+  para navegar; Lenis parado enquanto aberto) e comparação **antes/depois** com botões
+  `aria-pressed`. As imagens pequenas nunca são ampliadas (max-width = largura natural).
+- **Correcção relacionada:** a máscara do SplitText cortava acentos e cedilhas nos títulos
+  com line-height 0.85; as palavras passam a ter classe (`rv-word`) e a máscara
+  (`.rv-word-mask`) tem folga vertical.
+- **Custo medido:** com 9 projectos e capas, a home em mobile mediu Perf 93-99 (TBT
+  140-310 ms) em vez de 99. Numa comparação directa com a Fase 8 (mesma máquina, builds
+  webpack intercaladas) são cerca de +100 ms de TBT. Os case studies continuam a 99/100.
+
+## 3.8 Testes finais e publicação (Fase 9, 2026-11-22)
+
+Tudo executado sobre a build de produção local (`next start`), com Edge headless via CDP.
+
+| Verificação | Resultado |
+|---|---|
+| Instalação limpa (`npm ci` numa cópia só com os ficheiros do repositório) + lint + build | OK |
+| `npm audit` | 0 vulnerabilidades (depois de `npm audit fix` e de `next`/`eslint-config-next` 16.4.6) |
+| Links: 20 páginas, 306 URLs e recursos internos, 398 âncoras, mailto, 13 links externos com `target="_blank"` + `rel="noopener"`, redireccionamento de idioma, 404, headers de segurança | 29/29 |
+| Links externos | 200 em todos, excepto o LinkedIn (999, resposta habitual a pedidos automáticos) e a home dos Açores (403 do Cloudflare a pedidos automáticos) |
+| Mobile e tablet (320, 360, 390, 414, 844 em paisagem, 768, 1024), com toque: home PT/EN e os 9 case studies sem scroll horizontal; controlos >= 24 px | 28/28 |
+| Interacções em telemóvel: menu (toque, inert, link, Escape), terminal em ecrã inteiro, troca de idioma na mesma página, lightbox por toque, reduced motion, consola sem erros | 14/14 |
+| Baterias anteriores (Fases 4-8 e galeria) | 202/202 |
+
+Lighthouse 13.6.0 final:
+
+| Página | Perf | A11y | BP | SEO |
+|---|---|---|---|---|
+| Home PT (mobile) | 95 | 100 | 100 | 100 |
+| Home EN (mobile) | 96 | 100 | 100 | 100 |
+| Home PT (desktop) | 100 | 100 | 100 | 100 |
+| Diagnóstico Formativo (mobile) | 99 | 100 | 100 | 100 |
+| Plataforma APR Açores EN (mobile) | 99 | 100 | 100 | 100 |
+| Technologic (desktop) | 100 | 100 | 100 | 100 |
+
+Corrigido nesta fase: o botão do menu mobile passou de 30×44 para 44×44 px.
+
+**Publicação:** `engines.node >= 20.9.0`, `.env.example` (excepção no `.gitignore`) e um
+guia de deploy no README (Vercel, outro alojamento com Node, verificações depois de
+publicar). O deploy em si exige a conta do Kelsio no Vercel.
+
 ## 4. Projectos — factos verificados nos repositórios
 
 | Projecto | Confirmado no repositório | Ano (1.º commit) |
 |---|---|---|
 | **Cross-Tenant Access** (`crosstenant`) | Plugin local Totara (`local_crosstenant`, maturidade ALPHA, base Moodle 3.9 / Totara 19). Autoriza User → Course entre tenants; papéis limitados a student/editingteacher; capabilities `view`/`grantaccess`/`revokeaccess`; 4 funções externas AJAX; inscrição via instância `enrol_self` dedicada por curso; tarefa agendada de expiração (15 min); eventos de auditoria; privacy provider RGPD com anonimização; observer de eliminação de curso; UI Mustache + AMD; strings PT/EN; 10 ficheiros de testes PHPUnit + scripts CLI de verificação. Achado em aberto documentado: cursos cross-tenant não aparecem nas listagens "Os meus cursos". **Não reproduzir** host de QA, nomes de tenants ou IDs que constam do README. | 2026 |
 | **Progress Recovery** (repositório **privado**, dados sensíveis; fonte: README fornecido pelo Kelsio, 2026-11-08) | Plugin local Totara 19 (`local_progressrecovery`), desenvolvido para a **Zurich**. Recebe, valida, compara e recupera dados exportados por uma ferramenta de extracção. **Validação:** pára na primeira falha, nada é guardado; ZIP lido por streams (nunca extraído); nomes de entradas seguros, sem symlinks, cifra ou expansão desproporcionada; assinatura HMAC-SHA256 com segredo partilhado; checksums SHA-256 com lista fechada; manifesto com lista fechada de tabelas; compatibilidade por componente (4 níveis); pacotes guardados fora do webroot. **Comparação:** 7 classificações (Novo, Idêntico, Alterado, Conflito, Inválido, Destino mais recente, Ignorado), sem alterar dados; utilizadores mapeados por username; o destino prevalece; relatório com filtros e exportação CSV/JSON. **Recuperação em 6 etapas** validadas uma a uma (contas e fichas, tentativas SCORM, Feedback e conclusões, notas, registos de eventos, certificados), por lotes retomáveis; operação por registo (interrupções nunca duplicam; reclassificação no momento da escrita); conclusões via `core_completion\helper`; nunca cria inscrições; **desfazer** por ordem inversa, com limites documentados. Recuperação desligada por omissão; capability `local/progressrecovery:manage` sem papel por omissão. **Testes:** scripts que geram pacotes reais em SQLite descartável e validam com as classes do plugin. **Nunca publicar:** nomes de servidores, caminhos locais, estado/datas das fases, nem link para o repositório. | 2026 |
+| **Diagnóstico Formativo (SDF)** (produto **EDUdigital**, repositório privado; fonte: checkout local de `local_lnf` - README, `version.php`, `tests/`, histórico git - e descrição do papel pelo Kelsio, 2026-11-14) | Plugin local Totara 19 (`local_lnf`, v1.4.4; primeira versão estável v1.4.3). Ciclo anual de necessidades de formação: sugestão (RH) → validação (Direções, equipa directa via job assignments) → receção (RH aprova/rejeita/devolve) → cronograma com inscrição automática; recolha para orçamento com exportação Excel/CSV. Estado das propostas calculado; moeda guardada por proposta (EUR, MT, CVE, Kz, USD); notificações e eventos; RGPD via `totara_userdata`; Mustache; moodle-cs com CI bloqueante; 10 ficheiros PHPUnit. **Papel:** coordenou a equipa no MVP e desenvolveu Receção, Validação e Cronograma; depois do MVP ficou com o plugin completo até à versão estável. **Nunca publicar:** link do repositório, nomes de outros contribuidores, contacto de suporte. | 2025 |
+| **Technologic** (technologic.ao; fonte: site público e capturas, 2026-11-14, e o Kelsio: "criado totalmente por mim") | Website institucional de uma empresa angolana de tecnologia (fundada em 2025, Luanda). Next.js (App Router) com CSS Modules e Bootstrap; páginas Home, Serviços (pacotes com preços em Kz), Sobre, Portfólio, Contactos, Rastrear pedido, Termos, Privacidade; banner de cookies com Personalizar / Apenas essenciais / Aceitar todos; JSON-LD WebSite. **Nunca publicar:** nomes ou fotos da equipa da página Sobre. Ano 2025 e autoria ("desenhei e desenvolvi") confirmados pelo Kelsio a 2026-11-15. | 2025 |
+| **Plataforma APR Açores** (cliente Direção Regional dos Açores; fonte: Kelsio, 2026-11-14, sessões/memória do projecto Totara e código de `local_oidcgraphsync` v0.3.0) | Quatro entregas: **home pública** unificada (filtros Todas/AP/Geral por AJAX, entidade, pesquisa, destaques cronológicos, validada numa pasta paralela em produção); **bloco Crossselling** (produto EDUdigital; `totara_course_is_viewable`, capability do relatório, modo remoto removido, bloco vazio oculto aos formandos; publicado e confirmado); **BigBlueButton** no Totara 19 (AMD com define anónimo, renderers explícitos para gravações, seletor de papéis; validado em 19.1.2); **`local_oidcgraphsync`** (observer `user_loggedin`, Graph `/v1.0/me` com `$select`, diff, campos base e personalizados, vazio nunca apaga, login nunca falha, CLI `--probe`/`--apply`). Home pública em produção: `learnit.servicos.azores.gov.pt/server/home/index.php` (dada pelo Kelsio a 2026-11-15; protegida por Cloudflare, pedidos automáticos recebem 403). **Nunca publicar:** outros sites de clientes onde o bloco corre, servidores internos, nomes de pessoas. | 2026 |
 | **LBS Demo** | Demo de website para um centro de formação executiva (Luanda Business School). HTML, CSS e JS vanilla; 2 páginas (início, contactos); barra de progresso de scroll, scroll reveal (IntersectionObserver), contadores animados, countdown, menu mobile. O formulário de contacto é apenas front-end (validação + estado de sucesso, sem envio). | 2026 |
 | **Ozua Consultoria** | Single page para um centro de formação profissional. Reconstrução de um site não lançado; **o design é de outra pessoa** (README). HTML, CSS, JS com Bootstrap 5.3, jQuery 3.7 e Lordicon; cursor personalizado, carrosséis de cursos gerados a partir de dados JS, separadores empresas/singulares, modais, FAQ em acordeão. | 2024 |
 | **UOR Website** | Website para a Universidade Óscar Ribas. HTML, CSS, JS vanilla; carrossel hero com swipe e teclado, scroll reveal, contadores, menu mobile acessível (Escape). | 2026 |
@@ -385,10 +445,10 @@ Os anos são a data de criação do repositório.
 | 3 | i18n por rota + proxy + cookie; Navbar (secção activa, menu mobile, estado de scroll), Footer; page transitions (React `<ViewTransition>`) | ✅ |
 | 4 | Hero (sequência de entrada), SmoothScroll (Lenis), CustomCursor, Magnetic, scroll storytelling | ✅ |
 | 5 | Secções: Introduction, Selected Work, About, Experience, Expertise, Contact | ✅ |
-| 6 | `/[lang]/projects/[slug]` com case studies | ✅ (imagens reais: pendente de material publicável) |
+| 6 | `/[lang]/projects/[slug]` com case studies | ✅ (imagens reais acrescentadas a 2026-11-14, §3.7) |
 | 7 | Terminal v2: histórico ↑/↓, Tab autocomplete, sugestões, atalho global, focus trap, comandos `github`/`linkedin` | ✅ |
 | 8 | SEO: metadata por idioma, OG/Twitter, sitemap, robots, canonical + hreflang, JSON-LD `Person`, ícones; Lighthouse | ✅ |
-| 9 | Testes: lint, build, navegação, mobile, links; deploy | — |
+| 9 | Testes: lint, build, navegação, mobile, links; deploy | ✅ (§3.8; publicação no Vercel por fazer, depende da conta do Kelsio) |
 
 ---
 
@@ -398,14 +458,16 @@ Os anos são a data de criação do repositório.
 |---|---|---|
 | `gsap` | ^3.15 | ScrollTrigger, SplitText (gratuitos desde 3.13). Animações de scroll e sequências. |
 | `@gsap/react` | ^2.1 | `useGSAP`: cleanup automático e seguro com React 19 / Strict Mode. |
-| `eslint-config-next` | 16.4.5 | Alinhado com `next@16.4.5` (o 15.x partia o lint). |
+| `eslint-config-next` | 16.4.6 | Alinhado com `next@16.4.6` (o 15.x partia o lint). |
+| `eslint` | ^9.39 | Mantém-se no 9: o ESLint 10 corre, mas os plugins incluídos no `eslint-config-next` (import, jsx-a11y, react) só declaram suporte até ao 9, e esse conflito pode fazer falhar uma instalação limpa. Rever quando o `eslint-config-next` suportar o 10. |
 | `lenis` | 1.3.27 | Smooth scroll que mantém o scroll **nativo** (teclado, find-in-page, leitores de ecrã, `position: sticky`), ao contrário do ScrollSmoother que transforma o conteúdo. Desactivado em touch e com reduced motion. |
 
 Não planeadas: page transitions usam o `<ViewTransition>` nativo do React 19.3 (sem
 biblioteca, sem bloquear a navegação, degrada para navegação normal sem suporte).
 
-`npm audit` reporta 1 vulnerabilidade moderada em `minimatch`, transitiva de
-`@typescript-eslint` (dev-only, via `eslint-config-next`). Não entra no bundle.
+`npm audit`: 0 vulnerabilidades (2026-11-22). As 7 moderadas anteriores (`minimatch`,
+transitiva de `@typescript-eslint`, só nas ferramentas de lint) foram corrigidas com
+`npm audit fix`.
 
 ---
 

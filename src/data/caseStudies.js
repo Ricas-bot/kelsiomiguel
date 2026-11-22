@@ -120,6 +120,155 @@ export const caseStudies = {
     stack: ["PHP", "Totara 19", "HMAC-SHA256", "SHA-256", "ZIP streams", "JSON", "CSV", "SCORM", "SQLite (testes)"]
   },
 
+  // Source: local_lnf README, version.php, tests/ and git history (local
+  // checkout, 2026-11-14) + Kelsio's description of his role.
+  sdf: {
+    context: t(
+      "Produto da EDUdigital para Totara. Todos os anos, uma organização decide que formação vai dar e a quem. O SDF traz esse levantamento para dentro da plataforma: o RH propõe, as Direções escolhem, o RH decide, e as formações aprovadas passam a um cronograma com inscrição automática.",
+      "An EDUdigital product for Totara. Every year, an organisation decides which training to run and for whom. SDF brings that survey into the platform: HR proposes, departments choose, HR decides, and approved training moves to a schedule with automatic enrolment."
+    ),
+    problem: t(
+      "Um processo com quatro papéis, estados que dependem uns dos outros e dinheiro envolvido. Cada Direção só pode escolher a sua equipa, várias Direções podem escolher a mesma proposta, e o custo tem de ser recalculado só com os participantes aprovados - em várias moedas, sem nunca reinterpretar valores já guardados.",
+      "A process with four roles, interdependent states and money involved. Each department may only pick its own team, several departments can pick the same proposal, and the cost must be recalculated from approved participants only - across currencies, without ever reinterpreting stored amounts."
+    ),
+    solution: t(
+      [
+        "Na fase de MVP coordenei a equipa e desenvolvi a Receção, a Validação e o Cronograma. Depois do MVP fiquei responsável pelo plugin completo e levei-o até à primeira versão estável.",
+        "Cinco páginas, uma por etapa, integradas no menu principal do Totara: cada pessoa só vê as que pode abrir. As Direções são identificadas pelas job assignments do Totara, por isso não há uma hierarquia paralela para manter."
+      ],
+      [
+        "During the MVP I coordinated the team and built Reception, Validation and the Schedule. After the MVP I took over the whole plugin and brought it to its first stable release.",
+        "Five pages, one per stage, wired into Totara's main menu: each person only sees the ones they can open. Departments are identified through Totara job assignments, so there is no parallel hierarchy to maintain."
+      ]
+    ),
+    architecture: [
+      { name: t("Sugestão (RH)", "Suggestion (HR)"), body: t("Vários cursos num só formulário, cada um uma proposta independente: curso do catálogo ou externo, custo por participante, até 5 anexos. Um token de submissão impede duplicados por duplo clique.", "Several courses in one form, each an independent proposal: catalogue or external course, cost per participant, up to 5 attachments. A submission token prevents double-click duplicates.") },
+      { name: t("Validação (Direção)", "Validation (department)"), body: t("Prioridade e participantes, apenas da equipa directa. O departamento vem da organização da job assignment do diretor.", "Priority and participants, from the direct team only. The department comes from the director's job assignment organisation.") },
+      { name: t("Receção (RH)", "Reception (HR)"), body: t("Aprovar ou rejeitar participantes, um a um ou em bloco, ou devolver à Direção com feedback obrigatório. O custo é recalculado só com os aprovados.", "Approve or reject participants, one by one or in bulk, or return to the department with mandatory feedback. Cost is recalculated from approved participants only.") },
+      { name: t("Cronograma", "Schedule"), body: t("Vista anual, mensal ou em lista, com exportação CSV. Uma tarefa agendada inscreve os aprovados a partir da data de início de cada formação interna.", "Annual, monthly or list view, with CSV export. A scheduled task enrols approved participants from each internal course's start date.") },
+      { name: t("Recolha para orçamento", "Budget collection"), body: t("Consolida as formações aprovadas por proposta, departamento e prioridade, e exporta para Excel ou CSV com os filtros do ecrã.", "Consolidates approved training by proposal, department and priority, and exports to Excel or CSV with the on-screen filters.") },
+      { name: t("Eventos e notificações", "Events and notifications"), body: t("Cada passo gera um evento no registo do Totara. As notificações avisam quem tem de agir, nunca quem fez a acção, e só saem depois de a operação ficar gravada.", "Every step logs a Totara event. Notifications reach whoever has to act, never the person who acted, and only go out once the operation is saved.") },
+      { name: t("RGPD", "GDPR"), body: t("Items de exportação e purga no totara_userdata. Onde o histórico tem de ficar, o utilizador eliminado é anonimizado.", "Export and purge items in totara_userdata. Where the history must stay, a deleted user is anonymised.") }
+    ],
+    decisions: [
+      { title: t("Estado calculado, nunca editado", "Computed status, never edited"), body: t("O estado de uma proposta é recalculado a partir das validações e das decisões do RH sempre que algo muda, e cada estado tem uma explicação para o autor.", "A proposal's status is recalculated from validations and HR decisions whenever something changes, and every status comes with an explanation for its author.") },
+      { title: t("A moeda fica com a proposta", "Currency stays with the proposal"), body: t("Cada proposta guarda a moeda em que o custo foi introduzido; a conversão usa taxas guardadas antes de qualquer soma. Euro, metical, escudo cabo-verdiano, kwanza e dólar, no formato do idioma de cada utilizador.", "Each proposal stores the currency its cost was entered in; conversion uses stored rates before any sum. Euro, metical, Cape Verdean escudo, kwanza and dollar, in each user's locale format.") },
+      { title: t("A inscrição respeita decisões manuais", "Enrolment respects manual decisions"), body: t("Cada participante é inscrito uma só vez: quem for desinscrito à mão não volta a ser inscrito. Se o cron falhar um dia, a tarefa recupera na execução seguinte.", "Each participant is enrolled once: anyone unenrolled by hand is not enrolled again. If cron misses a day, the task catches up on the next run.") },
+      { title: t("Aspecto nativo, substituível pelo tema", "Native look, overridable by the theme"), body: t("Todas as páginas em templates Mustache, com os componentes e as cores do tema e contraste AA. O CSS do plugin só se aplica às suas páginas.", "Every page in Mustache templates, with the theme's components and colours and AA contrast. The plugin's CSS only applies to its own pages.") },
+      { title: t("Qualidade que bloqueia", "Quality that blocks"), body: t("Todo o código segue o moodle-cs e o CI falha com qualquer erro ou aviso.", "All code follows moodle-cs, and CI fails on any error or warning.") }
+    ],
+    results: t(
+      [
+        "Primeira versão estável (v1.4.3), seguida da v1.4.4.",
+        "10 ficheiros de testes PHPUnit: workflow, integridade dos dados, segurança, token de submissão, estado das propostas, formulário, templates, anexos, RGPD e arquitectura."
+      ],
+      [
+        "First stable release (v1.4.3), followed by v1.4.4.",
+        "10 PHPUnit test files: workflow, data integrity, security, submission token, proposal status, form, templates, attachments, GDPR and architecture."
+      ]
+    ),
+    notes: t(
+      ["Produto da EDUdigital: o código está num repositório privado. Os ecrãs mostram dados de desenvolvimento."],
+      ["An EDUdigital product: the code lives in a private repository. Screens show development data."]
+    ),
+    stack: ["PHP 8.1", "Totara 19", "Mustache", "JavaScript (AMD)", "External API", "Scheduled tasks", "totara_userdata", "PHPUnit", "moodle-cs", "CI"]
+  },
+
+  // Source: the live site (HTML + screenshots, 2026-11-14) and Kelsio.
+  technologic: {
+    context: t(
+      "A Technologic é uma empresa angolana de tecnologia, fundada em 2025 em Luanda, que cria websites, design UI/UX e software à medida. Desenhei e desenvolvi o seu website, technologic.ao.",
+      "Technologic is an Angolan technology company, founded in 2025 in Luanda, that builds websites, UI/UX design and custom software. I designed and built its website, technologic.ao."
+    ),
+    problem: t(
+      "Uma empresa nova precisa de credibilidade imediata: uma identidade que se distinga, serviços explicados com clareza, preços que o cliente vê antes de contactar e regras de privacidade cumpridas desde o primeiro acesso.",
+      "A new company needs instant credibility: an identity that stands out, clearly explained services, prices the client sees before getting in touch, and privacy rules respected from the first visit."
+    ),
+    solution: t(
+      [
+        "Um site em Next.js (App Router) com CSS Modules e Bootstrap, numa identidade escura com lima e tipografia larga.",
+        "A home apresenta a proposta e os três serviços. A página de serviços mostra os pacotes de websites com preços em kwanzas, e há páginas institucionais, portfólio, contactos, rastreio de pedidos, termos e política de privacidade."
+      ],
+      [
+        "A Next.js (App Router) site with CSS Modules and Bootstrap, in a dark and lime identity with wide typography.",
+        "The home page presents the pitch and the three services. The services page lists website packages with prices in kwanzas, alongside company pages, portfolio, contacts, order tracking, terms and privacy policy."
+      ]
+    ),
+    architecture: [
+      { name: t("Home", "Home"), body: t("Hero com feixe de luz, serviços, chamada para o portfólio e apresentação da empresa.", "Hero with a beam of light, services, a call to the portfolio and the company intro.") },
+      { name: t("Serviços", "Services"), body: t("Título com efeito de escrita, três pacotes de websites, acordeão de design UI/UX e software à medida.", "Typewriter headline, three website packages, a UI/UX design accordion and custom software.") },
+      { name: t("Sobre nós", "About"), body: t("Visão geral, missão, visão, metas e equipa.", "Overview, mission, vision, goals and team.") },
+      { name: t("Portfólio e contactos", "Portfolio and contacts"), body: t("Galeria de projectos e página de contacto.", "Project gallery and contact page.") },
+      { name: t("Rastrear pedido", "Order tracking"), body: t("Página para o cliente acompanhar o seu pedido.", "A page where clients follow their order.") },
+      { name: t("Termos e privacidade", "Terms and privacy"), body: t("Termos de utilização e política de privacidade, ligados no rodapé e no banner de cookies.", "Terms of use and privacy policy, linked from the footer and the cookie banner.") }
+    ],
+    decisions: [
+      { title: t("Preços à vista", "Prices up front"), body: t("Os três pacotes mostram o preço e o que incluem, sem obrigar a um contacto prévio; o pacote recomendado está destacado.", "The three packages show their price and what's included without requiring contact first; the recommended package is highlighted.") },
+      { title: t("Consentimento granular", "Granular consent"), body: t("O banner oferece Personalizar, Apenas essenciais e Aceitar todos, com ligação à política de privacidade, e um botão fixo permite rever a escolha.", "The banner offers Customise, Essential only and Accept all, links to the privacy policy, and a fixed button lets visitors revisit their choice.") },
+      { title: t("Bootstrap como base, CSS Modules por componente", "Bootstrap as a base, CSS Modules per component"), body: t("A grelha e os componentes base vêm do Bootstrap; o estilo de cada componente fica isolado em CSS Modules.", "The grid and base components come from Bootstrap; each component's styling is scoped with CSS Modules.") },
+      { title: t("SEO de base", "Baseline SEO"), body: t("Meta description e dados estruturados WebSite em JSON-LD.", "Meta description and WebSite structured data in JSON-LD.") }
+    ],
+    results: null,
+    notes: null,
+    stack: ["Next.js (App Router)", "React", "CSS Modules", "Bootstrap", "JSON-LD"]
+  },
+
+  // Source: Kelsio (2026-11-14), the Totara project sessions/memory (home,
+  // crossselingedu, BBB) and the local_oidcgraphsync source. Never name the
+  // deployment hosts, other client sites or people.
+  "acores-platform": {
+    context: t(
+      "A plataforma de formação e capacitação online da Administração Pública Regional (APR) dos Açores corre em Totara e reúne várias entidades formadoras. Para a Direção Regional dos Açores fiz quatro entregas: a home pública, melhorias ao bloco Crossselling, a adaptação do BigBlueButton ao Totara 19 e um plugin de sincronização de atributos OIDC.",
+      "The Azores Regional Public Administration (APR) online training platform runs on Totara and brings several training providers together. For the Direção Regional dos Açores I made four deliveries: the public home, improvements to the Crossselling block, BigBlueButton adapted to Totara 19 and an OIDC attribute sync plugin."
+    ),
+    problem: t(
+      "Quatro problemas na mesma plataforma: uma oferta formativa repartida por páginas diferentes para cada público; um bloco de cursos em destaque com um modo remoto ligado a um marketplace já descontinuado; um módulo de videoconferência escrito para Moodle que falhava no Totara 19; e atributos do Microsoft Entra ID, como a empresa ou o departamento, que não chegavam ao perfil do Totara depois do login.",
+      "Four problems on one platform: a course offer split across separate pages per audience; a featured-courses block with a remote mode tied to a discontinued marketplace; a video-conferencing module written for Moodle that broke on Totara 19; and Microsoft Entra ID attributes, such as company or department, that never reached the Totara profile after login."
+    ),
+    solution: t(
+      [
+        "Home pública: uma única página de formações, com filtros Todas, AP e Geral carregados por AJAX, filtros por entidade formadora e pesquisa. Os destaques mostram formações a começar ou iniciadas recentemente, por ordem cronológica, com \"Mostrar mais\".",
+        "Bloco Crossselling, produto da EDUdigital que vai substituir a versão anterior em todas as plataformas: só mostra cursos que o utilizador pode ver, o autoplay respeita a escolha guardada, a cor personalizada fica no botão principal e o resto segue o tema.",
+        "BigBlueButton no Totara 19: o mod_bigbluebuttonbn voltou a mostrar as gravações e o seletor de papéis na sessão voltou a funcionar.",
+        "Sincronização de atributos OIDC (local_oidcgraphsync): depois de um login OpenID Connect, lê atributos adicionais do Microsoft Graph com o token guardado pelo auth_oidc e grava-os nos campos do Totara escolhidos pelo administrador."
+      ],
+      [
+        "Public home: a single courses page, with All, AP and General filters loaded over AJAX, provider filters and search. Highlights show courses starting soon or recently started, in chronological order, with \"Show more\".",
+        "Crossselling block, an EDUdigital product that will replace the previous version on every platform: it only shows courses the user can see, autoplay respects the saved choice, the custom colour stays on the main button and everything else follows the theme.",
+        "BigBlueButton on Totara 19: mod_bigbluebuttonbn shows recordings again and the in-session role picker works again.",
+        "OIDC attribute sync (local_oidcgraphsync): after an OpenID Connect login, it reads extra attributes from Microsoft Graph with the token stored by auth_oidc and writes them into the Totara fields the admin chose."
+      ]
+    ),
+    architecture: [
+      { name: t("Home pública", "Public home"), body: t("Uma index.php com os cursos servidos por AJAX e a lógica num só ficheiro, incluindo a definição dos campos personalizados do curso (público, tipologia, entidade formadora, ilha, carga horária...).", "One index.php with courses served over AJAX and the logic in a single file, including the definition of the custom course fields (audience, type, provider, island, workload...).") },
+      { name: t("Bloco Crossselling", "Crossselling block"), body: t("Carrossel filtrado por totara_course_is_viewable, sem o curso do site. Relatório restrito a administradores e gestores por capability própria. Modo remoto removido.", "Carousel filtered by totara_course_is_viewable, without the site course. Report restricted to admins and managers by its own capability. Remote mode removed.") },
+      { name: t("BigBlueButton", "BigBlueButton"), body: t("Módulos AMD recompilados com define anónimo, porque o loader do Totara transformava os módulos nomeados em texto. Renderers explícitos para as gravações, porque o render do Totara não recorre ao templatable.", "AMD modules rebuilt with anonymous define, because Totara's loader turned named modules into strings. Explicit renderers for recordings, because Totara's render doesn't fall back to templatable.") },
+      { name: t("Sincronização OIDC", "OIDC sync"), body: t("Observer do evento user_loggedin → pedido a /v1.0/me com $select dos atributos mapeados → diferenças contra o perfil actual → actualização de campos base e personalizados → evento user_updated.", "user_loggedin observer → request to /v1.0/me with $select of the mapped attributes → diff against the current profile → update of core and custom fields → user_updated event.") }
+    ],
+    decisions: [
+      { title: t("O login nunca falha por causa da sincronização", "Login never fails because of the sync"), body: t("Qualquer erro do Graph fica no debugging: o utilizador entra sempre. Só utilizadores OIDC são sincronizados, e só com um token válido do Microsoft Graph.", "Any Graph error goes to debugging: the user always gets in. Only OIDC users are synced, and only with a valid Microsoft Graph token.") },
+      { title: t("Vazio não apaga", "Empty never erases"), body: t("Um atributo vazio no Entra ID nunca apaga um valor existente no Totara, e só se grava o que mudou.", "An empty attribute in Entra ID never erases an existing Totara value, and only what changed is written.") },
+      { title: t("Atributos extra validados antes", "Extra attributes validated first"), body: t("Directory extensions do Entra Connect acrescentam-se nas definições e cada uma ganha um campo de mapeamento. Um script de CLI testa um nome com --probe e mostra as diferenças sem gravar, a menos que se peça --apply.", "Entra Connect directory extensions are added in settings and each gets its own mapping field. A CLI script tests a name with --probe and shows the diff without writing, unless --apply is passed.") },
+      { title: t("Validar em produção sem a expor", "Validate in production without exposing it"), body: t("A nova home foi testada numa pasta paralela no servidor real antes de substituir a original. Por isso tudo usa URLs relativos.", "The new home was tested in a parallel folder on the real server before replacing the original. That's why everything uses relative URLs.") },
+      { title: t("Um bloco vazio não aparece", "An empty block stays hidden"), body: t("Sem cursos seleccionados, o bloco fica oculto aos formandos; quem pode editar vê um botão para o configurar.", "With no courses selected, the block is hidden from learners; editors see a button to configure it.") }
+    ],
+    results: t(
+      [
+        "Bloco Crossselling publicado em produção e confirmado a funcionar.",
+        "BigBlueButton validado em Totara 19.1.2: gravações e papéis na sessão."
+      ],
+      [
+        "Crossselling block published to production and confirmed working.",
+        "BigBlueButton validated on Totara 19.1.2: recordings and in-session roles."
+      ]
+    ),
+    notes: t(
+      ["Código privado: o bloco Crossselling e o plugin de sincronização pertencem à EDUdigital. Os nomes de pessoas nas capturas foram ocultados."],
+      ["Private code: the Crossselling block and the sync plugin belong to EDUdigital. People's names in the screenshots are hidden."]
+    ),
+    stack: ["PHP", "Totara 19", "JavaScript (AMD)", "AJAX", "Mustache", "OpenID Connect", "Microsoft Graph", "Entra ID", "CLI"]
+  },
+
   "lbs-demo": {
     context: t(
       "Demo de website para um centro de formação executiva, criada para mostrar ao cliente o que o seu site poderia entregar.",

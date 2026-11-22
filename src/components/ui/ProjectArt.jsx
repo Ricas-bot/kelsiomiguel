@@ -4,9 +4,9 @@ import styles from "./ProjectArt.module.css";
 const PATTERNS = ["orbits", "grid", "bars", "dots", "lines"];
 
 /**
- * Typographic composition standing in for project imagery until real,
- * publishable screenshots exist (Phase 6). Each project gets its own
- * pattern + tone by index so the list never looks templated.
+ * Typographic composition behind every project. ProjectCover lays the real
+ * cover screenshot over it when one exists (data/media.js). Each project gets
+ * its own pattern + tone by index so the list never looks templated.
  * Decorative: the project name is always present as real text elsewhere.
  */
 export default function ProjectArt({ project, index, size = "md", className }) {

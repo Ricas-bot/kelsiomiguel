@@ -2,13 +2,14 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Github } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
-import ProjectArt from "@/components/ui/ProjectArt";
+import ProjectCover from "@/components/ui/ProjectCover";
 import ProjectMorph from "@/components/ui/ProjectMorph";
 import { TagList } from "@/components/ui/Tag";
 import ScrollScale from "@/components/effects/ScrollScale";
 import Reveal from "@/components/effects/Reveal";
 import ProjectList from "./ProjectList";
 import { projects } from "@/data/projects";
+import { getMedia } from "@/data/media";
 import { profile } from "@/data/profile";
 import { pad } from "@/lib/utils";
 import styles from "./Projects.module.css";
@@ -23,6 +24,7 @@ import styles from "./Projects.module.css";
 export default function Projects({ lang, t, a11y }) {
   const [lead, ...rest] = projects;
   const leadHref = `/${lang}/projects/${lead.slug}`;
+  const coverOf = (p) => getMedia(p.slug)?.cover ?? null;
 
   return (
     <section id="work" className={styles.section} aria-labelledby="work-title">
@@ -48,7 +50,7 @@ export default function Projects({ lang, t, a11y }) {
             <ProjectMorph slug={lead.slug}>
               <div>
                 <ScrollScale>
-                  <ProjectArt project={lead} index={0} size="lg" />
+                  <ProjectCover project={lead} index={0} cover={coverOf(lead)} size="lg" sizes="(min-width: 1000px) 40vw, 62vw" />
                 </ScrollScale>
               </div>
             </ProjectMorph>
@@ -105,6 +107,7 @@ export default function Projects({ lang, t, a11y }) {
           <h3 className={styles.moreTitle}>{t.more}</h3>
           <ProjectList
             projects={rest}
+            covers={Object.fromEntries(rest.map((p) => [p.slug, coverOf(p)]))}
             startIndex={1}
             lang={lang}
             labels={{ live: t.live, repo: t.repo, private: t.private, cursor: t.cursor, stack: t.stack, newTab: a11y.newTab }}

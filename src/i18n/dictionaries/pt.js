@@ -58,7 +58,7 @@ const pt = {
   work: {
     label: "Trabalhos selecionados",
     title: "Projectos em foco",
-    aside: "Do plugin LMS ao website institucional: projectos públicos, com tecnologias confirmadas no código.",
+    aside: "Do plugin LMS ao website institucional: trabalho público e privado, com tecnologias confirmadas no código.",
     featured: "Projecto principal",
     more: "Mais projectos",
     live: "Ver online",
@@ -78,6 +78,7 @@ const pt = {
       context: "Contexto",
       problem: "Problema",
       solution: "Solução",
+      screens: "Em ecrã",
       architecture: "Arquitectura",
       stack: "Tecnologias",
       decisions: "Decisões técnicas",
@@ -86,9 +87,21 @@ const pt = {
     },
     year: "Ano",
     client: "Cliente",
+    owner: "Produto",
     category: "Categoria",
     links: "Links",
-    next: "Próximo projecto"
+    next: "Próximo projecto",
+    gallery: {
+      open: "Ampliar imagem",
+      dialog: "Imagem ampliada",
+      close: "Fechar",
+      prev: "Imagem anterior",
+      next: "Imagem seguinte",
+      of: "de",
+      compare: "Comparar versões",
+      before: "Antes",
+      after: "Depois"
+    }
   },
   about: {
     label: "Sobre mim",

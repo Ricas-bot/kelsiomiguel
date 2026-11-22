@@ -2,7 +2,7 @@
  * Client engagements (professional work at EDUdigital).
  * Source: CV › Projetos (2026-10-15), plus entries added directly by Kelsio
  * (marked inline). Naming approved by Kelsio 2026-11-08.
- * Only what the CV states — no metrics, no internal details, no screenshots.
+ * Only what the CV states (plus Kelsio's additions, 2026-11-14) — no metrics, no internal details.
  * `market` mapping: PT = Portugal, AO = Angola (two markets confirmed by Kelsio).
  */
 export const clients = [
@@ -12,10 +12,10 @@ export const clients = [
     platform: "Totara",
     market: "PT",
     scope: {
-      pt: "API REST, integração de sistemas, configuração de SSO, suporte multi-tenant, plugins à medida, formação de eFormadores e coordenadores e desenvolvimento de microaprendizagem.",
-      en: "REST API, systems integration, SSO configuration, multi-tenant support, custom plugins, training for trainers and coordinators, and microlearning development."
+      pt: "API REST, integração de sistemas, configuração de SSO, suporte multi-tenant, plugins à medida, formação de eFormadores e coordenadores e desenvolvimento de microaprendizagem. Nova home pública (UI/UX), BigBlueButton adaptado ao Totara 19 e sincronização de atributos OIDC com o Microsoft Graph.",
+      en: "REST API, systems integration, SSO configuration, multi-tenant support, custom plugins, training for trainers and coordinators, and microlearning development. A new public home (UI/UX), BigBlueButton adapted to Totara 19 and OIDC attribute sync with Microsoft Graph."
     },
-    tags: ["REST API", "SSO", "Multi-tenant", "Plugins"]
+    tags: ["REST API", "SSO", "Multi-tenant", "Plugins", "UI/UX"]
   },
   {
     // Source: Kelsio, 2026-11-08 (not in the CV). Market assumed PT — confirm.
@@ -26,10 +26,10 @@ export const clients = [
     platform: "Totara",
     market: "PT",
     scope: {
-      pt: "Migração da plataforma de CentOS 7 para um novo servidor AlmaLinux 9, com PHP 8.3, MySQL 8 e site protegido por WAF Imperva. Desenvolvimento à medida do plugin Progress Recovery.",
-      en: "Platform migration from CentOS 7 to a new AlmaLinux 9 server, with PHP 8.3, MySQL 8 and the site protected by an Imperva WAF. Custom development of the Progress Recovery plugin."
+      pt: "Migração da plataforma de CentOS 7 para um novo servidor AlmaLinux 9, com PHP 8.3, MySQL 8 e site protegido por WAF Imperva. Desenvolvimento à medida do plugin Progress Recovery. Atualização de segurança do Apache no servidor, em resposta a uma vulnerabilidade global no mod_http2.",
+      en: "Platform migration from CentOS 7 to a new AlmaLinux 9 server, with PHP 8.3, MySQL 8 and the site protected by an Imperva WAF. Custom development of the Progress Recovery plugin. Apache security update on the server, in response to a global vulnerability in mod_http2."
     },
-    tags: ["Migration", "AlmaLinux 9", "PHP 8.3", "MySQL 8", "WAF Imperva", "Plugins"]
+    tags: ["Migration", "AlmaLinux 9", "PHP 8.3", "MySQL 8", "WAF Imperva", "Security", "Plugins"]
   },
   {
     id: "cin",

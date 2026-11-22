@@ -1,0 +1,285 @@
+/* ---------- Grid --------------------------------------------------------- */
+.grid {
+  display: grid;
+  gap: var(--space-7) var(--space-5);
+}
+
+.figure {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.zoom {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: zoom-in;
+}
+
+.zoom > * {
+  transition:
+    transform var(--duration-slow) var(--ease-out-expo),
+    border-color var(--duration-base) var(--ease-out-quart);
+}
+
+.zoom:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.caption {
+  display: flex;
+  gap: var(--space-3);
+  max-width: 62ch;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+}
+
+.caption span {
+  flex: none;
+  padding-top: 0.15em;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  color: var(--color-accent);
+}
+
+.phoneItem .caption {
+  justify-content: center;
+}
+
+@media (hover: hover) {
+  .zoom:hover > * {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+  }
+}
+
+@media (min-width: 700px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .wide {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------- Before / after ---------------------------------------------- */
+.compare {
+  display: grid;
+  gap: var(--space-3);
+  margin: var(--space-4) 0 0;
+}
+
+.compareHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.compareLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.02em;
+}
+
+.toggle {
+  display: inline-flex;
+  padding: 3px;
+  border: var(--border);
+  border-radius: var(--radius-pill);
+}
+
+.toggle button {
+  min-height: 36px;
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    color var(--duration-base) var(--ease-out-quart);
+}
+
+.toggle button[aria-pressed="true"] {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.toggle button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Both versions share one grid cell, so the frame keeps the taller height
+   and swapping never shifts the layout. */
+.stack {
+  display: grid;
+  align-items: start;
+}
+
+.layer {
+  grid-area: 1 / 1;
+  margin-inline: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--duration-base) var(--ease-out-quart),
+    visibility 0s linear var(--duration-base);
+}
+
+.layerOn {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity var(--duration-base) var(--ease-out-quart),
+    visibility 0s;
+}
+
+/* ---------- Lightbox ----------------------------------------------------- */
+.lightbox {
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: var(--space-4);
+  border: 0;
+  background: rgba(10, 10, 9, 0.96);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: var(--color-text);
+  overscroll-behavior: contain;
+}
+
+.lightbox::backdrop {
+  background: transparent;
+}
+
+.lightbox[open] {
+  display: grid;
+  place-items: center;
+  animation: lb-in var(--duration-base) var(--ease-out-quart);
+}
+
+@keyframes lb-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.lbInner {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 1600px;
+  height: 100%;
+}
+
+.lbBar,
+.lbNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.lbNav {
+  justify-content: center;
+}
+
+.lbCount {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  color: var(--color-text-muted);
+}
+
+.lbButton {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: var(--border);
+  border-radius: 50%;
+  background: var(--color-bg-elevated);
+  color: var(--color-text);
+  cursor: pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease-out-quart),
+    color var(--duration-fast) var(--ease-out-quart);
+}
+
+.lbButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .lbButton:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+}
+
+.lbFigure {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--space-3);
+  min-height: 0;
+  margin: 0;
+}
+
+.lbImage {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: calc(100dvh - 11rem);
+  object-fit: contain;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.lbCaption {
+  max-width: 70ch;
+  font-size: var(--text-sm);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zoom > *,
+  .layer,
+  .layerOn,
+  .toggle button {
+    transition: none;
+  }
+
+  .lightbox[open] {
+    animation: none;
+  }
+
+  @media (hover: hover) {
+    .zoom:hover > * {
+      transform: none;
+    }
+  }
+}

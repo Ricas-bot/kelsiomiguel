@@ -106,3 +106,11 @@
 .line-mask > span {
   display: block;
 }
+
+/* SplitText word masks (Reveal variant="words"): display titles use a
+   0.85 line-height, so give accents (Ó, Á) and the cedilla (Ç) room inside
+   the clip without changing the line box. */
+.rv-word-mask {
+  padding-block: 0.2em;
+  margin-block: -0.2em;
+}

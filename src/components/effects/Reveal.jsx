@@ -54,11 +54,13 @@ export default function Reveal({
             const split = SplitText.create(el, {
               type,
               mask: target,
+              wordsClass: "rv-word", // mask becomes .rv-word-mask (utilities.css)
               autoSplit: true,
               aria: /^H[1-6]$/.test(el.tagName) ? "auto" : "none",
               onSplit: (self) =>
                 gsap.from(self[target], {
-                  yPercent: 110,
+                  // words start lower: their mask has extra room for accents
+                  yPercent: variant === "words" ? 135 : 110,
                   duration: d.reveal,
                   ease: gsapEase.outExpo,
                   stagger: stagger || (variant === "lines" ? st.base : st.tight),
